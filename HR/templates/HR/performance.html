@@ -1,0 +1,127 @@
+{% extends 'HR/basic_dashboard.html'%}
+{% block image %}{{image}}{% endblock %}
+{% block username %}{{firstname}}{% endblock %}
+{% block css %}
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size:17px;
+}
+
+.styled-table thead tr {
+  background-color: #2A3E4C;
+  color: #ffffff;
+  text-align: left;
+}
+.container{
+  margin-right:60px;
+}
+.profile{
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2A3E4C;
+}
+
+.styled-table tbody tr.active-row {
+  color: #2A3E4C;
+}
+.add{
+  background-color:#2A3E4C;
+  color:white;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  width:70px;
+  border-radius:5px;
+  font-family: sans-serif;
+}
+.view{
+  background-color:#5C7985;
+  color:#fff;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  border-radius:5px;
+  margin-right:-10px;
+  font-family: sans-serif;
+}
+{% endblock %}
+{% block performance %} background-color: #D5D9DB; {% endblock %}
+{% block body %} 
+<div class="container">
+  <table class="styled-table">  
+    <thead>
+      <tr>
+        <th>User Name</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Role</th>
+        <th>Position</th>
+        <th colspan="2" style="text-align: center;">Action</th>
+      </tr>
+    </thead>
+      {% for emp in employees%}
+        {% if forloop.counter|divisibleby:2 %}
+          <tr>
+            <td>{{emp.user_name}}</td>
+            <td>{{emp.first_name}}</td>
+            <td>{{emp.department}}</td>
+            <td>{{emp.role}}</td>
+            <td>{{emp.position}}</td>
+            <form method="POST" action="{% url 'addPerformance' %}">
+              {% csrf_token %}
+              <td>
+                <input type="hidden" value="{{emp.user_name}}" name="username"/>
+                <input type="submit" class="add" value="Add"/></td>
+              <td><button class="view">View</button></td>
+            </form>
+          </tr>
+        {% else %}
+          <tr class="active-row">
+            <td>{{emp.user_name}}</td>
+            <td>{{emp.first_name}}</td>
+            <td>{{emp.department}}</td>
+            <td>{{emp.role}}</td>
+            <td>{{emp.position}}</td>
+            <form method="POST" action="{% url 'addPerformance' %}">
+              {% csrf_token %}
+              <td>
+                <input type="hidden" value="{{emp.user_name}}" name="username"/>
+                <input type="submit" class="add" value="Add"/></td>
+              <td><button class="view">View</button></td>
+            </form>
+
+          </tr>
+        {% endif %}
+  
+      {% endfor %}
+    </table>
+
+
+</div>
+{% endblock %}

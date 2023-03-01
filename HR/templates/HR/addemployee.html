@@ -1,0 +1,215 @@
+{% extends 'HR/basic_dashboard.html'%}
+{% block image %}{{image}}{% endblock %}
+{% block username %}{{firstname}}{% endblock %}
+{% block addemployee %} background-color: #D5D9DB; {% endblock %}
+{% block body %} 
+
+  <div class="content">
+    {% for message in messages%}
+      <div class="alertContainer" style="margin-inline: 28px;">
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              <strong>Message : </strong>{{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>  
+        </div>
+    {% endfor %}
+
+    <div class="card">
+      <div class="card-header" style="background-color: #5C7985; color: #fff;">
+        <div class="text-header">Add Employee</div>
+      </div>
+      <div class="card-body">
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="grid-row">
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">User Name</label>
+                <input autocomplete="off" name="username" class="input" type="text">
+                <div></div></div>          </div>
+            <div class="form-group">
+              <div class="input-group">
+                  <label for="formFileSm" class="form-label">Profile Picture</label>
+                  <input class="form-control" id="formFileSm" name="profile" type="file" style="width:100%; height:100%;">
+                <div></div></div>          
+              </div>
+          </div>
+          
+          <div class="grid-row">
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Password</label>
+                <input autocomplete="off" name="password"  class="input" type="text">
+                <div></div></div>          </div>
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Confirm Password</label>
+                <input autocomplete="off" name="confirmpassword"  class="input" type="text">
+                <div></div></div>          
+              </div>
+          </div>
+
+
+          <div class="grid-row">
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Mobile No</label>
+                <input autocomplete="off" name="mobileno"  class="input" type="text">
+                <div></div></div>          </div>
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Email</label>
+                <input autocomplete="off" name="email"  class="input" type="text">
+                <div></div></div>          
+              </div>
+          </div>
+
+          
+          <div class="grid-row">
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Surname</label>
+                <input autocomplete="off" name="surname"  class="input" type="text">
+                <div></div></div>          </div>
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">First Name</label>
+                <input autocomplete="off" name="firstname"  class="input" type="text">
+                <div></div></div>          
+              </div>
+          </div>
+
+          <div class="grid-row">
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Last Name</label>
+                <input autocomplete="off" name="lastname"  class="input" type="text">
+                <div></div></div>          </div>
+            <div class="form-group">
+              <div class="input-group" style="display: flex; flex-direction: column;">
+                <label class="label">Joining Date</label>
+                <input autocomplete="off" name="joiningdate"  class="input" type="date"
+                style="  border: 1px solid #ccc;
+                ">
+                <div></div></div>          
+              </div>
+          </div>
+
+          <div class="grid-row">
+            <div class="form-group">
+              <div class="input-group" style="display: flex; flex-direction: column; width: 100;">
+                <label class="label">Department</label>
+                <select class="form-select form-select-sm mb-1"  name="department" style="width: 100%; height: 45px;">
+                  <option selected></option>
+                  <option value="Account & Finance">Account & Finance</option>
+                  <option value="Sales & Marketing">Sales & Marketing</option>
+                  <option value="Infrastructures">Infrastructures</option>
+                  <option value="Research and development">Research and development</option>
+                  <option value="Learning and development">Learning and development</option>
+                  <option value="IT services">IT services</option>
+                  <option value="Product development">Product development</option>
+                  <option value="Security and transport">Security and transport</option>
+                  <option value="Designer">Designer</option>
+                </select>
+                </div>          
+              </div>
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Role</label>
+                <select class="form-select form-select-sm mb-1" name="role" style="width: 100%; height: 45px;">
+                  <option selected></option>
+                  <option value="FrontEnd Developer">FrontEnd Developer</option>
+                  <option value="BackEnd Developer">BackEnd Developer</option>
+                  <option value="Cloud Engineer">Cloud Engineer</option>
+                  <option value="QA">QA</option>
+                  <option value="Project Planner">Project Planner</option>
+                  <option value="Tester">Tester</option>
+                  <option value="UI Designer">UI Designer</option>
+                  <option value="Security Engineer">Security Engineer</option>
+                  <option value="Digital Marketing">Digital Marketing</option>
+                  <option value="Deployment Engineer">Deployment Engineer</option>
+                </select>
+                </div>          
+              </div>
+          </div>
+          
+
+          <div class="grid-row">
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Position</label>
+                <select class="form-select form-select-sm mb-1" name="position" style="width: 100%; height: 45px;">
+                  <option selected></option>
+                  <option value="Super Senior">Super Senior</option>
+                  <option value="Senior">Senior</option>
+                  <option value="Junior">Junior</option>
+                  <option value="Intern">Intern</option>
+                </select>            
+              </div>          
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Supervisor</label>
+                <input autocomplete="off" name="supervisor"  class="input" type="text">
+                <div></div></div>          
+              </div>
+          </div>
+
+
+          <div class="grid-row">
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Working Desk</label>
+                <input autocomplete="off" name="workingdesk"  class="input" type="text">
+                <div></div></div>          </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group" style="display: flex; flex-direction: column;">
+                  <label class="label">Date Of Birth</label>
+                  <input autocomplete="off" name="dob"  class="input" type="date"
+                  style="  border: 1px solid #ccc;
+                  ">
+                  <div></div></div>     
+              </div>
+          </div>
+          </div>
+
+          <div class="grid-row">
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Resident Address</label>
+                <input autocomplete="off" name="address"  class="input" type="text">
+                <div></div></div>          </div>
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Hometown</label>
+                <input autocomplete="off" name="hometown"  class="input" type="text">
+                <div></div></div>          
+              </div>
+          </div>
+
+          <div class="grid-row">
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Gender</label>
+                <select class="form-select form-select-sm mb-1" name="gender" style="width: 100%; height: 45px;">
+                  <option selected></option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>  
+              </div>          </div>
+            <div class="form-group">
+              <div class="input-group">
+                <label class="label">Salary</label>
+                <input autocomplete="off" name="salary"  class="input" type="text">
+                <div></div></div>          
+              </div>
+          </div>  
+            <input type="submit" class="btn" value="submit" style="color: #fff;background-color: #5C7985;"/>      
+        </form>
+      </div>
+    </div>
+    
+  </div>
+{% endblock %}

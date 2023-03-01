@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;800&family=Roboto:wght@500&display=swap" rel="stylesheet">  <title>Log In</title>
+  <link rel="stylesheet" href="{% static 'css/login_style.css' %}">
+</head>
+<body>
+  <div class="mainRec">
+    <div class="inputContent">
+        <p class="subtxt"> Manage All Your
+        <strong class="maintxt">Company Task</strong></p>
+        <div class="input-group">
+          <input required="" type="text" name="text" autocomplete="off" class="input">
+            <label class="user-label">User ID</label>
+        </div>
+        <div class="input-group">
+          <input required="" type="text" name="text" autocomplete="off" class="input">
+            <label class="user-label">Password</label>
+        </div>
+        <button class="button">Log IN
+        </button>
+    </div>
+    <div class="imageView">
+      <img src="{%static 'images/loginBackground.svg' %}" alt="">
+    </div>
+  </div>
+</body>
+</html>

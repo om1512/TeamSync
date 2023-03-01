@@ -1,0 +1,438 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      .card {
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+
+        margin: 10px;
+      }
+
+      .card-header {
+        background-color: #333;
+        padding: 16px;
+        text-align: center;
+      }
+
+      .card-header .text-header {
+        margin: 0;
+        font-size: 18px;
+        color: rgb(255, 255, 255);
+      }
+
+      .card-body {
+        padding: 16px;
+      }
+
+      .form-group {
+        margin-bottom: 10px;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 14px;
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 1px;
+      }
+
+      .form-group input[type="text"],
+      .form-group input[type="email"],
+      .form-group input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      .content {
+        margin: 50px;
+      }
+      .btn {
+        
+        width: 100%;
+        font-size: 16px;
+        background-color: #333;
+        color: #fff;
+        text-transform: uppercase;
+        transition: background-color 0.2s ease-in-out;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background-color: #ccc;
+        color: #333;
+      }
+      .grid-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div class="card">
+        <div class="card-header" style="background-color: #5c7985; color: #fff">
+          <div class="text-header">Add HR</div>
+        </div>
+        <div class="card-body">
+          {% for message in messages%}
+      <div class="alertContainer" style="margin-inline: 28px;">
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              <strong>Message : </strong>{{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>  
+        </div>
+    {% endfor %}
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="grid-row">
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">User Name</label>
+                  <input
+                    autocomplete="off"
+                    name="username"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <label for="formFileSm" class="form-label"
+                    >Profile Picture</label
+                  >
+                  <input
+                    class="form-control"
+                    id="formFileSm"
+                    name="profile"
+                    type="file"
+                    style="width: 100%; height: 100%"
+                  />
+                  <div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Password</label>
+                  <input
+                    autocomplete="off"
+                    name="password"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Confirm Password</label>
+                  <input
+                    autocomplete="off"
+                    name="confirmpassword"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Mobile No</label>
+                  <input
+                    autocomplete="off"
+                    name="mobileno"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Email</label>
+                  <input
+                    autocomplete="off"
+                    name="email"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Surname</label>
+                  <input
+                    autocomplete="off"
+                    name="surname"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">First Name</label>
+                  <input
+                    autocomplete="off"
+                    name="firstname"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Last Name</label>
+                  <input
+                    autocomplete="off"
+                    name="lastname"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div
+                  class="input-group"
+                  style="display: flex; flex-direction: column"
+                >
+                  <label class="label">Joining Date</label>
+                  <input
+                    autocomplete="off"
+                    name="joiningdate"
+                    class="input"
+                    type="date"
+                    style="
+                      height: 35px;
+                      padding-inline: 10px;
+                      border: 1px solid #ccc;
+                    "
+                  />
+                  <div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="form-group">
+                <div
+                  class="input-group"
+                  style="display: flex; flex-direction: column; width: 100"
+                >
+                  <label class="label">Department</label>
+                  <select
+                    class="form-select form-select-sm mb-1"
+                    name="department"
+                    style="width: 100%; height: 45px"
+                  >
+                    <option selected value="HR">HR</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Role</label>
+                  <select
+                    class="form-select form-select-sm mb-1"
+                    name="role"
+                    style="width: 100%; height: 45px"
+                  >
+                    <option selected value="Management">Management</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Position</label>
+                  <select
+                    class="form-select form-select-sm mb-1"
+                    name="position"
+                    style="width: 100%; height: 45px"
+                  >
+                    <option selected></option>
+                    <option value="Super Senior">Super Senior</option>
+                    <option value="Senior">Senior</option>
+                    <option value="Junior">Junior</option>
+                    <option value="Intern">Intern</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Supervisor</label>
+                  <input
+                    autocomplete="off"
+                    name="supervisor"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Working Desk</label>
+                  <input
+                    autocomplete="off"
+                    name="workingdesk"
+                    class="input"
+                    type="text"
+                  />
+                  
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div
+                    class="input-group"
+                    style="display: flex; flex-direction: column"
+                  >
+                    <label class="label">Date Of Birth</label>
+                    <input
+                      autocomplete="off"
+                      name="dob"
+                      height="70"
+                      class="input"
+                      type="date"
+                      style="
+                        height: 35px;
+                        padding-inline: 10px;
+                        border: 1px solid #ccc;
+                      "
+                    />
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Resident Address</label>
+                  <input
+                    autocomplete="off"
+                    name="address"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Hometown</label>
+                  <input
+                    autocomplete="off"
+                    name="hometown"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Gender</label>
+                  <input
+                    autocomplete="off"
+                    name="gender"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <label class="label">Salary</label>
+                  <input
+                    autocomplete="off"
+                    name="salary"
+                    class="input"
+                    type="text"
+                  />
+                  <div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-row">
+              <div class="form-group">
+                <div class="input-group">
+                  <input
+                  type="submit"
+                  class="btn"
+                  value="submit"
+                  style="color: #fff; background-color: #5c7985"/>
+          
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <a href="{% url 'logout'%}" style="text-decoration: none; width: 100%;">
+                    <div
+                    class="btn"
+                    style="color: #fff; background-color:brown"
+                    >Log Out</div>
+                 </a>
+                </div>
+              </div>
+            </div>
+            </form>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
