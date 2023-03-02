@@ -42,6 +42,7 @@ def recruitment(request):
 
 
 def leaveNotes(request):
+    print('hello world testing')
     if request.user.is_authenticated:
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
