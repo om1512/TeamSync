@@ -1,0 +1,111 @@
+{% extends 'HR/basic_dashboard.html'%}
+{% block image %}{{image}}{% endblock %}
+{% block username %}{{firstname}}{% endblock %}
+{% block recruitment %} background-color: #D5D9DB; {% endblock %}
+
+
+{% block body%}
+<div class="content">
+  {% for message in messages%}
+    <div class="alertContainer" style="margin-inline: 28px;">
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>  
+      </div>
+  {% endfor %}
+
+  <div class="card">
+    <div class="card-header" style="background-color: #5C7985; color: #fff;">
+      <div class="text-header">Vacancy Information</div>
+    </div>
+    <div class="card-body">
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+      
+        <div class="form-group">
+        <div class="form-group" style="margin-top: -10px;">
+          <label for="exampleFormControlTextarea1">Work</label>
+          <input type="text" class="input" name="work" id="exampleFormControlTextarea1" rows="1"/>
+        </div>
+        </div>
+        <div class="grid-row">
+          <div class="form-group">
+
+
+            
+            <div class="input-group" style="display: flex; flex-direction: column; width: 100;">
+              <label class="label">Department</label>
+              <select class="form-select form-select-sm mb-1"  name="department" style="width: 100%; height: 45px;">
+                <option selected></option>
+                <option value="Account & Finance">Account & Finance</option>
+                <option value="Sales & Marketing">Sales & Marketing</option>
+                <option value="Infrastructures">Infrastructures</option>
+                <option value="Research and development">Research and development</option>
+                <option value="Learning and development">Learning and development</option>
+                <option value="IT services">IT services</option>
+                <option value="Product development">Product development</option>
+                <option value="Security and transport">Security and transport</option>
+                <option value="Designer">Designer</option>
+              </select>
+              </div>          
+            </div>
+          <div class="form-group">
+            <div class="input-group">
+              <label class="label">Role</label>
+              <select class="form-select form-select-sm mb-1" name="role" style="width: 100%; height: 45px;">
+                <option selected></option>
+                <option value="FrontEnd Developer">FrontEnd Developer</option>
+                <option value="BackEnd Developer">BackEnd Developer</option>
+                <option value="Cloud Engineer">Cloud Engineer</option>
+                <option value="QA">QA</option>
+                <option value="Project Planner">Project Planner</option>
+                <option value="Tester">Tester</option>
+                <option value="UI Designer">UI Designer</option>
+                <option value="Security Engineer">Security Engineer</option>
+                <option value="Digital Marketing">Digital Marketing</option>
+                <option value="Deployment Engineer">Deployment Engineer</option>
+              </select>
+              </div>          
+            </div>
+             
+
+            <div class="form-group">
+              <div class="form-group" style="margin-top:0px;">
+                <label for="exampleFormControlTextarea1">Number Of Vacancy</label>
+                <input type="number" class="input" name="vacancyNumber" id="exampleFormControlTextarea1"  style="width: 100%;  border: 1px solid #ccc;
+                "/>
+              </div>
+              </div>
+              <div class="form-group" style="margin-top: 0px;">
+                <label for="exampleFormControlTextarea1">Salary Range</label>
+                <input type="text" class="input" name="salary" id="exampleFormControlTextarea1"  style="width: 100%;  border: 1px solid #ccc;"/>
+              </div>
+
+        </div>  
+        
+        
+        <div class="form-group" style="margin-top: -10px;">
+          <label for="exampleFormControlTextarea1">Experience</label>
+          <select class="form-select form-select-sm mb-1" name="experience" style="width: 100%; height: 45px;">
+            <option selected></option>
+            <option value="1 Year Experience">1 Year Experience</option>
+            <option value="6 Month Experience">6 Month Experience</option>
+            <option value="Anyone">Anyone</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-top: -10px;">
+          <label for="exampleFormControlTextarea1">Requirement</label>
+          <textarea class="form-control" name="Requirement" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group" style="margin-top: 0px;">
+          
+          <input type="submit" value="submit"  style="width: 100%; background-color: #2A3E4C;" name="submit" class="btn btn-primary"/>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+</div>
+{% endblock %}

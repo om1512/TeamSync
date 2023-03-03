@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;800&family=Roboto:wght@500&display=swap"
+  rel="stylesheet"
+/>
+  <title>Document</title>
+  <style>
+    body{
+      font-family: Poppins;
+      padding-top: 20px;
+      background-color: #DCDCDB;
+    }
+
+    .styled-table {
+  border-collapse: collapse;
+  
+  font-size: 0.7em;
+  font-family: sans-serif;
+  min-width: 400px;
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size:14px;
+}
+
+.styled-table thead tr {
+  background-color: #2A3E4C;
+  color: #ffffff;
+  text-align: left;
+}
+.container{
+  margin-right:60px;
+}
+.profile{
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border:1px solid #5C7985;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2A3E4C;
+}
+.content{
+  margin-right: 20px;
+} 
+.styled-table tbody tr.active-row {
+  color: #2A3E4C;
+}
+.add{
+  background-color:#2A3E4C;
+  color:white;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  width:auto;
+  border-radius:5px;
+  font-family: sans-serif;
+}
+    .content{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+    .imageView{
+      padding: 10px;
+    }
+    img{
+        width: 150px;
+        height: 150px;
+        border-radius: 100%;
+        box-shadow:  -20px 20px 60px #bebebe,
+             20px -20px 60px #ffffff;
+    }
+    .textHolder{
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+      margin-left: 15px;
+      width: 100%;
+      
+    }
+    .text{
+      font-size: 30px;
+      
+    }
+    .subText{
+      font-size: 12px;
+    }
+    .rules{
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+        width: 100%;
+      margin-left: 20px;
+
+    }
+    .container{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+    }
+    p{
+      font-size: 13px;
+      margin: 0px;
+
+    }
+    h3{
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <div class="imageView">
+        <img src="{%static 'HR/images/tcs.png' %}" alt="">
+      </div>
+      <div class="textHolder">
+        <div class="text" >
+          Tata Consultancy Services
+        </div>
+        <div class="subText">
+          Tata Consultancy Services is an Indian multinational information technology services and consulting company with its headquarters in Mumbai. It is a part of the Tata Group and operates in 150 locations across 46 countries. In July 2022, it was reported that TCS had over 600,000 employees worldwide.
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="rules">
+      <h3>Company Rules & Regulations</h3>
+      <div class="textBox">
+          <p>&#183; Working Days : 6 Working Days in a week</p>
+          <p>&#183; Annual Leaves : 15 Annual Leaves</p>
+          <p>&#183; Working Hours : 9 AM to 6 PM</p>
+      </div>
+      </div>
+      
+  <center style="margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Vacancy</center>  
+  <table class="styled-table">  
+    <thead>
+      <tr>
+        <th>Work</th>
+        <th>Department</th>
+        <th>Role</th>
+        <th>Salary Range</th>
+        <th>Experience</th>
+        <th>Requirement</th>
+        <th></th>
+      </tr>
+    </thead>
+      {% for v in vacancy%}
+      {% if v.status != 'Close' %}
+        {% if forloop.counter|divisibleby:2 %}
+          <tr>
+            <td>{{v.main_work}}</td>
+            <td>{{v.department}}</td>
+            <td>{{v.role}}</td>
+            <td>{{v.salary_range}}</td>
+            <td>{{v.experience}}</td>
+            <td>{{v.requirement}}</td>
+            <form method="POST" action="{% url 'applyForJob'%}">
+              <input type="hidden" value="{{v.vacancy_id}}" name="vacancy_id"/>
+  
+              {% csrf_token %}
+              <td>
+                <input type="submit" class="add" value="Apply"/></td>
+            </form>
+          </tr>
+        {% else %}
+          <tr class="active-row">
+            <td>{{v.main_work}}</td>
+            <td>{{v.department}}</td>
+            <td>{{v.role}}</td>
+            <td>{{v.salary_range}}</td>
+            <td>{{v.experience}}</td>
+            <td>{{v.requirement}}</td>
+            <form method="POST" action="{% url 'applyForJob'%}">
+              <input type="hidden" value="{{v.vacancy_id}}" name="vacancy_id"/>
+  
+              {% csrf_token %}
+              <td>
+                <input type="submit" class="add" value="Apply"/></td>
+            </form>
+  
+          </tr>
+        {% endif %}
+        {% endif %}
+      {% endfor %}
+    </table>  
+  </div>
+
+
+</body>
+</html>

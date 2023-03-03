@@ -23,3 +23,28 @@ class HR(models.Model):
     salary = models.IntegerField(default=0)
     def __str__(self):
         return str(self.user_name)
+    
+
+
+class vacancy(models.Model):
+    vacancy_id = models.BigAutoField(primary_key=True)
+    department = models.CharField(max_length=100)
+    role = models.CharField(max_length=100)
+    main_work = models.CharField(max_length=100)
+    salary_range = models.CharField(max_length=100)
+    experience = models.CharField(max_length=100)
+    number_of_vacancy = models.IntegerField()
+    status = models.CharField(default='Open',max_length=50)
+    requirement = models.CharField(max_length=200,default='')
+    def __str__(self):
+        return str(self.vacancy_id)
+    
+class appliers(models.Model):
+    vacancy_id = models.ForeignKey(vacancy,on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    phone_no = models.CharField(max_length=20)
+    cv = models.FileField()
+
+    
+

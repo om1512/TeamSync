@@ -26,6 +26,8 @@ urlpatterns = [
     path('', views.login),
     path('HR/', include('HR.urls')),
     path('Employee/', include('Employee.urls')),
+    path('vacancyInfo/',views.vacancy_info ),
     path('Add_HR',views.add_hr),
+    path('applyForJob',views.applyForJob,name='applyForJob'),
     path('logout',views.logout,name='logout')
 ]+ static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

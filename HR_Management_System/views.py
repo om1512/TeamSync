@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate
 from Employee.models import Employee
-from HR.models import HR
+from HR.models import HR,vacancy,appliers
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
@@ -85,6 +85,10 @@ def add_hr(request):
     else:
         return render(request, 'addHR.html')
 
+def vacancy_info(request):
+
+    v = vacancy.objects.all()
+    return render(request, 'vacancyInfo.html',{'vacancy':v})
 
 def isEmployee(name):
     try:
@@ -110,3 +114,8 @@ def isHR(name):
 def logout(request):
     auth_logout(request)
     return redirect('/')
+
+
+def applyForJob(request):
+
+    return render(request, 'applyForJob.html')

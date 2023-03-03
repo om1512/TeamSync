@@ -3,6 +3,7 @@ import time
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from Employee.models import Employee,emp_task
+from HR.models import vacancy,appliers
 from HR.models import HR
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -37,7 +38,13 @@ def recruitment(request):
     if request.user.is_authenticated:
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
-        return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image})
+        v = vacancy.objects.all()
+        if request.method == 'POST':
+            if request.POST.get('vacancy_id'):
+                vacancy.objects.filter(vacancy_id = request.POST.get('vacancy_id')).delete()
+                return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v})
+    
+        return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v})
     else:
         return redirect('/')
 
@@ -161,6 +168,29 @@ def evaluate(request):
     
     else:
         return redirect('/')
+
+
+def addVacancy(request):
+    if request.user.is_authenticated:
+        hr = HR.objects.get(user_name=User.objects.get(username=request.user))
+        image = str(hr.profile_picture)   
+        if request.method == 'POST':
+            if request.POST.get('salary') and request.POST.get('vacancyNumber') and request.POST.get('department') and request.POST.get('role') and request.POST.get('Requirement'):
+                v = vacancy()
+                v.department = request.POST.get('department')
+                v.role = request.POST.get('role')
+                v.main_work =request.POST.get('work')
+                v.salary_range= request.POST.get('salary')
+                v.experience=request.POST.get('experience')
+                v.number_of_vacancy = request.POST.get('vacancyNumber')
+                v.status = 'Open'
+                v.requirement = request.POST.get('Requirement')
+                v.save()
+                messages.success(request, 'Vacancy Released')
+
+        return render(request, 'HR/addVacancy.html',{'firstname':hr.first_name,'image':image})
+    else:
+        return redirect('/') 
 
 def logout(request):
     auth_logout(request)

@@ -2,4 +2,129 @@
 {% block image %}{{image}}{% endblock %}
 {% block username %}{{firstname}}{% endblock %}
 {% block recruitment %} background-color: #D5D9DB; {% endblock %}
-{% block body %} Recruitment {% endblock %}
+
+{% block css %}
+.styled-table {
+  border-collapse: collapse;
+  
+  font-size: 0.7em;
+  font-family: sans-serif;
+  min-width: 400px;
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size:14px;
+}
+
+.styled-table thead tr {
+  background-color: #2A3E4C;
+  color: #ffffff;
+  text-align: left;
+}
+.container{
+  margin-right:60px;
+}
+.profile{
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border:1px solid #5C7985;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2A3E4C;
+}
+.content{
+  margin-right: 20px;
+} 
+.styled-table tbody tr.active-row {
+  color: #2A3E4C;
+}
+.add{
+  background-color:#2A3E4C;
+  color:white;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  width:auto;
+  border-radius:5px;
+  font-family: sans-serif;
+}
+
+{% endblock %}
+
+
+{% block body %} 
+<div style="margin-right: 10px;">
+  <a href="{% url 'addVacancy' %}">
+    <Button  class="btn btn-outline-primary" value="submit" style="width: 100%;">Announce Vacancy</Button>   
+  </a>
+
+<center style="margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Opened Vacancy</center>  
+<table class="styled-table">  
+  <thead>
+    <tr>
+      <th>Work</th>
+      <th>Department</th>
+      <th>Role</th>
+      <th>Salary Range</th>
+      <th>Experience</th>
+      <th>Requirement</th>
+      <th></th>
+    </tr>
+  </thead>
+    {% for v in vacancy%}
+    {% if v.status != 'Close' %}
+      {% if forloop.counter|divisibleby:2 %}
+        <tr>
+          <td>{{v.main_work}}</td>
+          <td>{{v.department}}</td>
+          <td>{{v.role}}</td>
+          <td>{{v.salary_range}}</td>
+          <td>{{v.experience}}</td>
+          <td>{{v.requirement}}</td>
+          <form method="POST" action="{% url 'evaluate' %}">
+            <input type="hidden" value="{{v.vacancy_id}}" name="vacancy_id"/>
+
+            {% csrf_token %}
+            <td>
+              <input type="submit" class="add" value="Close"/></td>
+          </form>
+        </tr>
+      {% else %}
+        <tr class="active-row">
+          <td>{{v.main_work}}</td>
+          <td>{{v.department}}</td>
+          <td>{{v.role}}</td>
+          <td>{{v.salary_range}}</td>
+          <td>{{v.experience}}</td>
+          <td>{{v.requirement}}</td>
+          <form method="POST" action="{% url 'evaluate' %}">
+            <input type="hidden" value="{{v.vacancy_id}}" name="vacancy_id"/>
+
+            {% csrf_token %}
+            <td>
+              <input type="submit" class="add" value="Close"/></td>
+          </form>
+
+        </tr>
+      {% endif %}
+      {% endif %}
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
