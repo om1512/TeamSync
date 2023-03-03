@@ -2,64 +2,206 @@
 {% block image %}{{image}}{% endblock %}
 {% block username %}{{firstname}}{% endblock %}
 {% block performance %} background-color: #D5D9DB; {% endblock %}
+{% block css %}
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.7em;
+  font-family: sans-serif;
+  min-width: 400px;
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size:14px;
+}
+
+.styled-table thead tr {
+  background-color: #2A3E4C;
+  color: #ffffff;
+  text-align: left;
+}
+.container{
+  margin-right:60px;
+}
+.profile{
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border:1px solid #5C7985;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2A3E4C;
+}
+.content{
+  margin-right: 20px;
+} 
+.styled-table tbody tr.active-row {
+  color: #2A3E4C;
+}
+.add{
+  background-color:#2A3E4C;
+  color:white;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  width:auto;
+  border-radius:5px;
+  font-family: sans-serif;
+}
+
+
+.styled-tablee {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-tablee thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+
+.styled-tablee th,
+.styled-tablee td {
+    padding: 12px 15px;
+    border:1px solid #009879;
+
+}
+
+
+
+.styled-tablee tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-tablee tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-tablee tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.styled-tablee tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+{% endblock %}
+
 {% block body %} 
 <div class="content">
-  {% for message in messages%}
-    <div class="alertContainer" style="margin-inline: 28px;">
-          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-            <strong>Message : </strong>{{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>  
-      </div>
-  {% endfor %}
+  <table class="styled-table">  
+    <thead>
+      <tr>
+        <th>Date Time</th>
+        <th>Task</th>
+        <th>Description</th>
+        <th colspan="2" style="text-align: center;">Employee Feedback</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+      {% for emp in employee_task%}
+      {% if emp.hr_status != 'Complete' %}
+        {% if forloop.counter|divisibleby:2 %}
+          <tr>
+            <td>{{emp.assigned_time}}</td>
+            <td>{{emp.task}}</td>
+            <td>{{emp.description}}</td>
+            <td>{{emp.employee_feedback}}</td>
+            <td>{{emp.employee_status}}</td>
+            <form method="POST" action="{% url 'evaluate' %}">
+              {% csrf_token %}
+              <td>
+                <input type="hidden" value="{{emp.task_id}}" name="taskid"/>
+                <input type="submit" class="add" value="Evaluate"/></td>
+            </form>
+          </tr>
+        {% else %}
+          <tr class="active-row">
+            <td>{{emp.assigned_time}}</td>
+            <td>{{emp.task}}</td>
+            <td>{{emp.description}}</td>
+            <td>{{emp.employee_feedback}}</td>
+            <td>{{emp.employee_status}}</td>
+            <form method="POST" action="{% url 'evaluate' %}">
+              {% csrf_token %}
+              <td>
+                <input type="hidden" value="{{emp.task_id}}" name="taskid"/>
+                <input type="submit" class="add" value="Evaluate"/></td>
+            </form>
 
-  <div class="card">
-    <div class="card-header" style="background-color: #5C7985; color: #fff;">
-      <div class="text-header">Add Performance</div>
-    </div>
-    <div class="card-body">
-      <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-          <div class="form-group">
-            <div class="input-group">
-              <label class="label">User Name</label>
-              <input autocomplete="off" name="name" class="input"  value="{{user_name}}" type="text">
-              <div></div></div>          </div>
-
-        
-        
-
-
-        <div class="grid-row">
-          <div class="form-group">
-            <div class="input-group" style="display: flex; flex-direction: column;">
-              <label class="label">Starting time</label>
-              <input autocomplete="off" name="start" style="border: 1px solid #ccc;" class="input" type="datetime-local">
-              <div></div></div>          </div>
-              <div class="form-group">
-                <div class="input-group" style="display: flex; flex-direction: column;">
-                  <label class="label">Ending time</label>
-                  <input autocomplete="off" name="end" style="border: 1px solid #ccc;" class="input" type="datetime-local">
-                  <div></div></div>          </div>
-            </div>
-        </div>
-
-
-        <div class="form-group" style="margin-inline: 15px; margin-top: -10px;">
-          <label for="exampleFormControlTextarea1">Task</label>
-          <textarea class="form-control" name="task" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <div class="row"  style="display: grid; grid-template-columns: 1fr 1fr 1fr; column-gap: 20px; margin-inline: 15px; margin-bottom: 10px;">
-          <input type="submit" value="anqueue" name="submit" class="btn btn-outline-primary"/>
-          <input type="submit" value="pending" name="submit" class="btn btn-outline-secondary"/>
-          <input type="submit" value="complete" name="submit" class="btn btn-outline-success"/>
-        </div>
-      </form>
+          </tr>
+        {% endif %}
+        {% endif %}
+      {% endfor %}
+    </table>
 
 
-    </div>
-  </div>
+    Completed Task
+    <table class="styled-tablee">  
+      <thead>
+        <tr>
+          <th>Date Time</th>
+          <th>Task</th>
+          <th>Description</th>
+          <th style="text-align: center;">Time Taken</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+        {% for emp in employee_task%}
+        {% if emp.hr_status == 'Complete' %}
+          {% if forloop.counter|divisibleby:2 %}
+            <tr>
+              <td>{{emp.assigned_time}}</td>
+              <td>{{emp.task}}</td>
+              <td>{{emp.description}}</td>
+              <td>{{emp.employee_feedback}}</td>
+              <td>{{emp.employee_status}}</td>
+              <form method="POST" action="{% url 'evaluate' %}">
+                {% csrf_token %}
+                <td>
+                  Complete</td>
+              </form>
+            </tr>
+          {% else %}
+            <tr class="active-row">
+              <td>{{emp.assigned_time}}</td>
+              <td>{{emp.task}}</td>
+              <td>{{emp.description}}</td>
+              <td>{{emp.employee_feedback}}</td>
+              <td>{{emp.employee_status}}</td>
+              <form method="POST" action="{% url 'evaluate' %}">
+                {% csrf_token %}
+                <td>
+                  Complete
+                </td>
+              </form>
   
+            </tr>
+          {% endif %}
+          {% endif %}
+        {% endfor %}
+      </table>
 </div>
 
 {% endblock %}

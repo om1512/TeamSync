@@ -82,7 +82,7 @@
         <th>Department</th>
         <th>Role</th>
         <th>Position</th>
-        <th colspan="2" style="text-align: center;">Action</th>
+        <th>Action</th>
       </tr>
     </thead>
       {% for emp in employees%}
@@ -97,8 +97,7 @@
               {% csrf_token %}
               <td>
                 <input type="hidden" value="{{emp.user_name}}" name="username"/>
-                <input type="submit" class="add" value="Add"/></td>
-              <td><button class="view">View</button></td>
+                <input type="submit" class="add" value="View"/></td>
             </form>
           </tr>
         {% else %}
@@ -112,8 +111,7 @@
               {% csrf_token %}
               <td>
                 <input type="hidden" value="{{emp.user_name}}" name="username"/>
-                <input type="submit" class="add" value="Add"/></td>
-              <td><button class="view">View</button></td>
+                <input type="submit" class="add" value="View"/></td>
             </form>
 
           </tr>

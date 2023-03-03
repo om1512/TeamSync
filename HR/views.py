@@ -1,8 +1,8 @@
 import datetime
-from time import timezone
+import time
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from Employee.models import Employee,Employee_performance
+from Employee.models import Employee,Employee_performance,emp_task
 from HR.models import HR
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -42,7 +42,6 @@ def recruitment(request):
 
 
 def leaveNotes(request):
-    print('hello world testing')
     if request.user.is_authenticated:
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
@@ -103,30 +102,72 @@ def addEmployee(request):
     else:
         return redirect('/')
 
+def addTask(request):
+    if request.user.is_authenticated:
+        hr = HR.objects.get(user_name=User.objects.get(username=request.user))
+        image = str(hr.profile_picture)
+        employee = Employee.objects.all()
+        if request.method == 'POST':
+            if request.POST.get('username') and request.POST.get('task') and request.POST.get('description'):
+                e_task = emp_task()
+                e_task.user_name = User.objects.get(username=request.POST.get('username'))
+                e_task.task = request.POST.get('task')
+                e_task.description = request.POST.get('description')
+                e_task.assigned_time = datetime.datetime.now()
+                e_task.complete_time = datetime.datetime.now()
+                e_task.save()
+                messages.success(request, 'Task Added Successfully')
+        return render(request, 'HR/addTask.html',{'firstname':hr.first_name,'image':image,'employee':employee})
+    else:
+        return redirect('/')
+
 def addPerformance(request):
     if request.user.is_authenticated:
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
         user_name = request.POST.get('username')
+        employee_task = emp_task.objects.filter(user_name = User.objects.get(username=user_name))       
+        return render(request, 'HR/addPerformance.html',{'firstname':hr.first_name,'image':image,'employee_task':employee_task})
+    else:
+        return redirect('/')    
+
+
+def evaluate(request):
+    if request.user.is_authenticated:
+        hr = HR.objects.get(user_name=User.objects.get(username=request.user))
+        image = str(hr.profile_picture)
+        task = request.POST.get('taskid')
+        print(task)
+        employee_task_data = emp_task.objects.filter(task_id = task)
         if request.method == 'POST':
-                if request.POST.get('start') and request.POST.get('end') and request.POST.get('name') and request.POST.get('task') and request.POST.get('submit'):
-                    emp_performance = Employee_performance()
-                    emp_performance.user_name = User.objects.get(username=request.POST.get('name'))
-                    emp_performance.start =request.POST.get('start')
-                    emp_performance.end = request.POST.get('end')
-                    emp_performance.task = request.POST.get('task')
-                    emp_performance.status = request.POST.get('submit')
-                    emp_performance.save()
-                    emp_performance.clean()
-                    messages.success(request, 'Performance Data Inserted Successfully')
-                    
-        return render(request, 'HR/addPerformance.html',{'firstname':hr.first_name,'image':image,'user_name':user_name})
+            if request.POST.get('taskid') and request.POST.get('hr_feedback') and request.POST.get('hr_status'):
+                task_obj = emp_task.objects.get(task_id=request.POST.get('taskid'))
+                task_obj.hr_feedback= request.POST.get('hr_feedback')
+                if request.POST.get('hr_status') == 'Complete':
+                    task_obj.complete_time = datetime.datetime.now()
+                    task_obj.save()
+                    first_time = task_obj.complete_time 
+                    second_time = task_obj.assigned_time
+                    print(first_time)
+                    print(second_time)
+                    # difference = first_time - second_time
+                    # datetime.timedelta(0, 8, 562000)
+                    # seconds_in_day = 24 * 60 * 60
+                    # print("IS It Working ? ",divmod(difference.days * seconds_in_day + difference.seconds, 60))
+                    task_obj.employee_status = 'Complete'
+                    task_obj.hr_status = request.POST.get('hr_status')
+                task_obj.save()
+                task_obj.save()
+        return render(request, 'HR/evaluate.html',{'firstname':hr.first_name,'image':image,'task_data':employee_task_data})
+    
     else:
         return redirect('/')
 
 def logout(request):
     auth_logout(request)
     redirect('/')
+
+
 
 
         

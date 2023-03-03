@@ -1,3 +1,5 @@
+from datetime import datetime
+from django.utils.timezone import now
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -32,5 +34,21 @@ class Employee_performance(models.Model):
     end = models.DateTimeField()
     task = models.CharField(max_length=500)
     status = models.CharField(max_length=20)
+    def __str__(self):
+        return str(self.user_name)
+
+
+class emp_task(models.Model):
+    task_id = models.BigAutoField(primary_key=True)
+    user_name = models.ForeignKey(User, on_delete=models.CASCADE)
+    assigned_time = models.DateTimeField()
+    complete_time =  models.DateTimeField()
+    task = models.CharField(max_length=100)
+    description = models.CharField(max_length=300)
+    employee_feedback = models.CharField(max_length=100,default='')
+    employee_status = models.CharField(max_length=20,default='')
+    hr_feedback = models.CharField(max_length=100,default='')
+    hr_status = models.CharField(max_length=20,default='')
+
     def __str__(self):
         return str(self.user_name)

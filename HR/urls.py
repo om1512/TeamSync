@@ -8,6 +8,8 @@ urlpatterns = [
     path('leave_notes', views.leaveNotes, name='leaveNotes'),
     path('add_employee', views.addEmployee, name='addEmployee'),
     path('logout', views.logout, name='logout'),
-    path('addPerformance',views.addPerformance,name='addPerformance')
+    path('addPerformance',views.addPerformance,name='addPerformance'),
+    path('evaluate',views.evaluate,name='evaluate'),
+    path('addTask',views.addTask,name='addTask')
 ]
 
