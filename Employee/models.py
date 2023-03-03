@@ -28,16 +28,6 @@ class Employee(models.Model):
     def __str__(self):
         return str(self.user_name)
     
-class Employee_performance(models.Model):
-    user_name = models.ForeignKey(User, on_delete=models.CASCADE)
-    start = models.DateTimeField()
-    end = models.DateTimeField()
-    task = models.CharField(max_length=500)
-    status = models.CharField(max_length=20)
-    def __str__(self):
-        return str(self.user_name)
-
-
 class emp_task(models.Model):
     task_id = models.BigAutoField(primary_key=True)
     user_name = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -49,6 +39,8 @@ class emp_task(models.Model):
     employee_status = models.CharField(max_length=20,default='')
     hr_feedback = models.CharField(max_length=100,default='')
     hr_status = models.CharField(max_length=20,default='')
-
+    time_taken = models.CharField(max_length=70,default='')
     def __str__(self):
         return str(self.user_name)
+    
+    

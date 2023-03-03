@@ -2,11 +2,12 @@ import datetime
 import time
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from Employee.models import Employee,Employee_performance,emp_task
+from Employee.models import Employee,emp_task
 from HR.models import HR
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import logout as auth_logout
+from django.utils import timezone
 
 # Create your models here.
 # Create your views here.
@@ -113,8 +114,8 @@ def addTask(request):
                 e_task.user_name = User.objects.get(username=request.POST.get('username'))
                 e_task.task = request.POST.get('task')
                 e_task.description = request.POST.get('description')
-                e_task.assigned_time = datetime.datetime.now()
-                e_task.complete_time = datetime.datetime.now()
+                e_task.assigned_time = timezone.localtime()
+                e_task.complete_time = timezone.localtime()
                 e_task.save()
                 messages.success(request, 'Task Added Successfully')
         return render(request, 'HR/addTask.html',{'firstname':hr.first_name,'image':image,'employee':employee})
@@ -144,20 +145,18 @@ def evaluate(request):
                 task_obj = emp_task.objects.get(task_id=request.POST.get('taskid'))
                 task_obj.hr_feedback= request.POST.get('hr_feedback')
                 if request.POST.get('hr_status') == 'Complete':
-                    task_obj.complete_time = datetime.datetime.now()
-                    task_obj.save()
-                    first_time = task_obj.complete_time 
+                    task_obj.complete_time = timezone.localtime()
+                    first_time = timezone.localtime()
                     second_time = task_obj.assigned_time
-                    print(first_time)
-                    print(second_time)
-                    # difference = first_time - second_time
-                    # datetime.timedelta(0, 8, 562000)
-                    # seconds_in_day = 24 * 60 * 60
-                    # print("IS It Working ? ",divmod(difference.days * seconds_in_day + difference.seconds, 60))
+                    difference = first_time - second_time
+                    datetime.timedelta(0, 8, 562000)
+                    seconds_in_day = 24 * 60 * 60
+                    p,q = divmod(difference.days * seconds_in_day + difference.seconds, 60)
+                    task_obj.time_taken = (str(p)+ " min " + str(q) +" sec")
                     task_obj.employee_status = 'Complete'
                     task_obj.hr_status = request.POST.get('hr_status')
                 task_obj.save()
-                task_obj.save()
+
         return render(request, 'HR/evaluate.html',{'firstname':hr.first_name,'image':image,'task_data':employee_task_data})
     
     else:

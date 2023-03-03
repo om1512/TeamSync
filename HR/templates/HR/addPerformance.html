@@ -84,7 +84,6 @@
 .styled-tablee th,
 .styled-tablee td {
     padding: 12px 15px;
-    border:1px solid #009879;
 
 }
 
@@ -164,8 +163,8 @@
           <th>Date Time</th>
           <th>Task</th>
           <th>Description</th>
-          <th style="text-align: center;">Time Taken</th>
-          <th>Status</th>
+          <th>Time Taken</th>
+          <th></th>
         </tr>
       </thead>
         {% for emp in employee_task%}
@@ -175,12 +174,11 @@
               <td>{{emp.assigned_time}}</td>
               <td>{{emp.task}}</td>
               <td>{{emp.description}}</td>
-              <td>{{emp.employee_feedback}}</td>
-              <td>{{emp.employee_status}}</td>
+              <td>{{emp.time_taken}}</td>
               <form method="POST" action="{% url 'evaluate' %}">
                 {% csrf_token %}
-                <td>
-                  Complete</td>
+                <td style="align-items: center;">
+                 <img style="width: 50px; height: 50px;" src="../../static/HR/images/complete.svg"></td>
               </form>
             </tr>
           {% else %}
@@ -188,13 +186,11 @@
               <td>{{emp.assigned_time}}</td>
               <td>{{emp.task}}</td>
               <td>{{emp.description}}</td>
-              <td>{{emp.employee_feedback}}</td>
-              <td>{{emp.employee_status}}</td>
+              <td>{{emp.time_taken}}</td>
               <form method="POST" action="{% url 'evaluate' %}">
                 {% csrf_token %}
-                <td>
-                  Complete
-                </td>
+                <td style="align-items: center;">
+                  <img style="width: 50px; height: 50px;" src="../../static/HR/images/complete.svg"></td>
               </form>
   
             </tr>
@@ -202,6 +198,7 @@
           {% endif %}
         {% endfor %}
       </table>
+
 </div>
 
 {% endblock %}
