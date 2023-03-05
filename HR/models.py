@@ -24,8 +24,7 @@ class HR(models.Model):
     def __str__(self):
         return str(self.user_name)
     
-
-
+    
 class vacancy(models.Model):
     vacancy_id = models.BigAutoField(primary_key=True)
     department = models.CharField(max_length=100)
@@ -44,7 +43,11 @@ class appliers(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField()
     phone_no = models.CharField(max_length=20)
-    cv = models.FileField()
+    cv = models.FileField(upload_to='Applier/CV')
+    status = models.CharField(max_length=20,default='')
+    def __str__(self):
+        return str(self.vacancy_id)
+    
 
     
 

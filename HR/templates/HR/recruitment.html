@@ -97,12 +97,12 @@
           <td>{{v.salary_range}}</td>
           <td>{{v.experience}}</td>
           <td>{{v.requirement}}</td>
-          <form method="POST" action="{% url 'evaluate' %}">
+          <form method="POST" action="">
             <input type="hidden" value="{{v.vacancy_id}}" name="vacancy_id"/>
 
             {% csrf_token %}
             <td>
-              <input type="submit" class="add" value="Close"/></td>
+              <input type="submit" name="submit" class="add" value="Close"/></td>
           </form>
         </tr>
       {% else %}
@@ -113,12 +113,12 @@
           <td>{{v.salary_range}}</td>
           <td>{{v.experience}}</td>
           <td>{{v.requirement}}</td>
-          <form method="POST" action="{% url 'evaluate' %}">
+          <form method="POST" action="">
             <input type="hidden" value="{{v.vacancy_id}}" name="vacancy_id"/>
 
             {% csrf_token %}
             <td>
-              <input type="submit" class="add" value="Close"/></td>
+              <input type="submit" name="submit" class="add" value="Close"/></td>
           </form>
 
         </tr>
@@ -126,5 +126,77 @@
       {% endif %}
     {% endfor %}
   </table>
+
+<br/>
+
 </div>
-{% endblock %}
+
+<div style="margin-right: 10px;">
+
+<center style="margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Applications</center>  
+<table class="styled-table">  
+ 
+    {% for v in vacancy%}
+
+    {% if v.status != 'Close' %}
+    <thead>
+      <tr>
+      <th>Work</th>
+      <th>Department</th>
+      <th>Role</th>
+      <th>Salary Range</th>
+      <th>Experience</th>
+      <th>Requirement</th>
+      </tr>
+    </thead>
+      <tr>
+          <td>{{v.main_work}}</td>
+          <td>{{v.department}}</td>
+          <td>{{v.role}}</td>
+          <td>{{v.salary_range}}</td>
+          <td>{{v.experience}}</td>
+          <td>{{v.requirement}}</td>
+      </tr>
+      
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone No</th>
+        <th>CV</th>
+        <th colspan="2" style="text-align: center;">Action</th>
+      </tr>
+      </thead>
+      {% for ap in appliers%}
+        {% if ap.vacancy_id.vacancy_id == v.vacancy_id %}
+        {% if ap.status == '' %}
+        <form action="" method="POST">
+          <tr>
+            <td>{{ap.name}}</td>
+            <td>{{ap.email}}</td>
+            <td>{{ap.phone_no}}</td>
+            <input type="hidden" value="{{ap.cv}}" name="cv"/>
+            <input type="hidden" value="{{ap.vacancy_id}}" name="vacancy_id"/>
+
+              {% csrf_token %}
+              <input type="hidden" name="cv" value="{{ap.cv}}"/>
+            <td><input type="submit" name="submit" style="background-color: none; text-decoration: underline; background-color: transparent; border: 0px; font-size: larger;"  value="View"/></td>
+            <td><center><input type="submit" class="add" name="submit" style="background-color: rgb(22, 87, 22);"  value="Approve"/></center></td>
+            <td><center><input type="submit" class="add" name="submit" style="background-color: brown;" value="Reject"/></center></td>
+          </tr> 
+        </form>
+        {% endif %}
+        {% endif %}
+      {% endfor %}
+     
+    {% endif %}
+    
+    {% endfor %}
+
+  </table>
+
+  
+<br/>
+
+</div>
+  {% endblock %}

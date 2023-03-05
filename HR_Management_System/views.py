@@ -118,4 +118,17 @@ def logout(request):
 
 def applyForJob(request):
 
-    return render(request, 'applyForJob.html')
+        vacancy_id = request.POST.get('vacancy_id')
+        print(vacancy_id)
+        v = vacancy.objects.filter(vacancy_id = vacancy_id)
+        if v and request.POST.get('name') and request.POST.get('email') and request.POST.get('phone') and request.FILES.get('cv'):
+                a = appliers()
+                a.vacancy_id = vacancy.objects.get(vacancy_id = vacancy_id)
+                a.name = request.POST.get('name')
+                a.email = request.POST.get('email')
+                a.phone_no = request.POST.get('phone')
+                a.cv = request.FILES.get('cv')
+                a.save()
+                print('inserted')
+                return redirect('/vacancyInfo')
+        return render(request, 'applyForJob.html',{'vacancy':v})    

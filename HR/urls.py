@@ -11,6 +11,7 @@ urlpatterns = [
     path('addPerformance/',views.addPerformance,name='addPerformance'),
     path('addVacancy/',views.addVacancy,name='addVacancy'),
     path('evaluate/',views.evaluate,name='evaluate'),
+    path('viewCV/',views.viewCV,name="viewCV"),
     path('addTask/',views.addTask,name='addTask')
 ]
 

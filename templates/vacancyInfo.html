@@ -130,6 +130,10 @@
     h3{
       font-size: 20px;
     }
+    .row{
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+    }
   </style>
 </head>
 <body>
@@ -148,15 +152,25 @@
       </div>
       
     </div>
-
-    <div class="rules">
-      <h3>Company Rules & Regulations</h3>
-      <div class="textBox">
-          <p>&#183; Working Days : 6 Working Days in a week</p>
-          <p>&#183; Annual Leaves : 15 Annual Leaves</p>
-          <p>&#183; Working Hours : 9 AM to 6 PM</p>
-      </div>
-      </div>
+    <div class="row">
+      <div class="rules">
+        <h3>Company Rules & Regulations</h3>
+        <div class="textBox">
+            <p>&#183; Working Days : 6 Working Days in a week</p>
+            <p>&#183; Annual Leaves : 15 Annual Leaves</p>
+            <p>&#183; Working Hours : 9 AM to 6 PM</p>
+        </div>
+        </div>
+        <div class="rules">
+          <h3>Note</h3>
+          <div class="textBox">
+              <p>1. Make sure you apply for any post once at a time and don't apply for any other post until you get any response</p>
+              <p>2. After Applying you will be notified via your contact details ( Make Sure To Give Correct One )</p>
+              <p>3. If you are selected then our recruiters will reach out to you ( Via Contact Info ) and inform you about further procedure</p>
+          </div>
+        </div>
+    </div>
+    
       
   <center style="margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Vacancy</center>  
   <table class="styled-table">  
@@ -182,9 +196,8 @@
             <td>{{v.experience}}</td>
             <td>{{v.requirement}}</td>
             <form method="POST" action="{% url 'applyForJob'%}">
-              <input type="hidden" value="{{v.vacancy_id}}" name="vacancy_id"/>
-  
               {% csrf_token %}
+              <input type="hidden" value="{{v.vacancy_id}}" name="vacancy_id"/>
               <td>
                 <input type="submit" class="add" value="Apply"/></td>
             </form>
@@ -198,9 +211,10 @@
             <td>{{v.experience}}</td>
             <td>{{v.requirement}}</td>
             <form method="POST" action="{% url 'applyForJob'%}">
+              {% csrf_token %}
               <input type="hidden" value="{{v.vacancy_id}}" name="vacancy_id"/>
   
-              {% csrf_token %}
+              
               <td>
                 <input type="submit" class="add" value="Apply"/></td>
             </form>
@@ -211,7 +225,5 @@
       {% endfor %}
     </table>  
   </div>
-
-
 </body>
 </html>

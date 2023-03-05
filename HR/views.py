@@ -39,14 +39,25 @@ def recruitment(request):
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
         v = vacancy.objects.all()
+        a = appliers.objects.all()  
+        print(a)
         if request.method == 'POST':
-            if request.POST.get('vacancy_id'):
+            if request.POST.get('vacancy_id') and request.POST.get('submit') == 'Close':
+                print(request.POST.get('submit'))
                 vacancy.objects.filter(vacancy_id = request.POST.get('vacancy_id')).delete()
-                return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v})
-    
-        return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v})
+                return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v,'appliers':a})
+            if request.POST.get('cv') and request.POST.get('submit') == 'View':
+                return redirect('/media/'+request.POST.get("cv"))
+            if request.POST.get('vacancy_id') and request.POST.get('submit') == 'Approve':
+                appliers.objects.filter(vacancy_id = vacancy.objects.get(vacancy_id=request.POST.get('vacancy_id'))).update(status = 'Approve')
+                return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v,'appliers':a})
+            if request.POST.get('vacancy_id') and request.POST.get('submit') == 'Reject':
+                appliers.objects.filter(vacancy_id = vacancy.objects.get(vacancy_id=request.POST.get('vacancy_id'))).update(status = 'Reject')
+                return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v,'appliers':a})
+            
+        return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v,'appliers':a})    
     else:
-        return redirect('/')
+        return redirect('/')    
 
 
 def leaveNotes(request):
@@ -57,6 +68,10 @@ def leaveNotes(request):
     else:
         return redirect('/')
 
+
+def viewCV(request):
+    cv = request.POST.get('cv')
+    return redirect(request, str(cv))
 
 def addEmployee(request):
 
