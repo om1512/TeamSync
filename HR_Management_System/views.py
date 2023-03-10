@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-
+from django.core.mail import send_mail
 from django.http import HttpResponse
 
 
@@ -71,6 +71,12 @@ def add_hr(request):
                         emp.salary = request.POST.get('salary')
                         emp.save()
                         print('inserted')
+                        send_mail(
+                        "Welcome to Meta",
+                        'Dear, '+ request.POST.get('firstname') + "\nWe are excited to welcome you to our team."+ request.POST.get('firstname') +" will meet you in the company. Please remember this username and password. \nUserName : "+request.POST.get('username')+"\nPassword : "+request.POST.get('password') + "\n\nYou Can Use This UserName and Password To Login into Company's System",
+                        '22ceuod004@ddu.ac.in',
+                        [request.POST.get('email')],
+                        fail_silently=False,)   
                     except Exception as e:
                         messages.error(request, 'Something Went Wrong Here')
                 except Exception as e:

@@ -45,6 +45,7 @@ class appliers(models.Model):
     phone_no = models.CharField(max_length=20)
     cv = models.FileField(upload_to='Applier/CV')
     status = models.CharField(max_length=20,default='')
+    
     def __str__(self):
         return str(self.vacancy_id)
     

@@ -2,14 +2,14 @@ import datetime
 import time
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from Employee.models import Employee,emp_task
+from Employee.models import Employee,emp_task,leave_notes
 from HR.models import vacancy,appliers
 from HR.models import HR
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import logout as auth_logout
 from django.utils import timezone
-
+from django.core.mail import send_mail
 # Create your models here.
 # Create your views here.
 
@@ -33,6 +33,16 @@ def payroll(request):
     else:
         return redirect('/')
 
+def leaveResponse(request):
+    if request.user.is_authenticated:
+        hr = HR.objects.get(user_name=User.objects.get(username=request.user))
+        image = str(hr.profile_picture)
+        l = leave_notes.objects.all()
+        username = request.POST.get('username')
+        print(username)
+        return render(request, 'HR/leaveResponse.html',{'firstname':hr.first_name,'image':image,'leave_notes':l})
+    else:
+        return redirect('/')
 
 def recruitment(request):
     if request.user.is_authenticated:
@@ -64,7 +74,8 @@ def leaveNotes(request):
     if request.user.is_authenticated:
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
-        return render(request, 'HR/leavenotes.html',{'firstname':hr.first_name,'image':image})
+        l = leave_notes.objects.all()
+        return render(request, 'HR/leavenotes.html',{'firstname':hr.first_name,'image':image,'leave_notes':l})
     else:
         return redirect('/')
 
@@ -108,7 +119,13 @@ def addEmployee(request):
                             emp.date_of_birth = request.POST.get('dob')
                             emp.salary = request.POST.get('salary')
                             emp.save()
-                            print('inserted')
+                            print('send email to employee that he is inserted')
+                            send_mail(
+                        'System Login Information',
+                        'Dear, '+ request.POST.get('firstname') + "\nYour UserName : "+request.POST.get('username')+"\nPassword : "+request.POST.get('password') + "\nYou Can Use This UserName and Password To Login into the System",
+                        '22ceuod004@ddu.ac.in',
+                        [request.POST.get('email')],
+                        fail_silently=False,)   
                         except Exception as e:
                             messages.error(request, 'Something Went Wrong Here')
                     except Exception as e:

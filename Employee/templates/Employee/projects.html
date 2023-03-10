@@ -1,3 +1,235 @@
 {% extends 'Employee/basic_dashboard.html'%}
+{% block image %}{{image}}{% endblock %}
+{% block username %}{{firstname}}{% endblock %}
 {% block projects %} background-color: #D5D9DB; {% endblock %}
-{% block body %} My Projects {% endblock %}
+
+{% block css %}
+.styled-table {
+  border-collapse: collapse;
+  margin: 0 px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size:15px;
+}
+
+.styled-table thead tr {
+  background-color: #2A3E4C;
+  color: #ffffff;
+  text-align: left;
+}
+.container{
+  margin-right:60px;
+}
+.profile{
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border:1px solid #2A3E4C;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2A3E4C;
+}
+
+.styled-table tbody tr.active-row {
+  color: #2A3E4C;
+}
+.add{
+  background-color:#2A3E4C;
+  color:white;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  width:70px;
+  border-radius:5px;
+  font-family: sans-serif;
+}
+.view{
+  background-color:#5C7985;
+  color:#fff;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  border-radius:5px;
+  margin-right:-10px;
+  font-family: sans-serif;
+}
+
+
+.styled-tablee {
+  border-collapse: collapse;
+  margin: 0px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-tablee thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+
+.styled-tablee th,
+.styled-tablee td {
+    padding: 12px 15px;
+
+}
+
+.container{
+  margin-right:60px;
+}
+
+.styled-tablee tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-tablee tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-tablee tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+.styled-tablee tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+
+{% endblock %}
+{% block body %}
+<div class="container">
+  <center style="margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Your Task</center>  
+
+  <table class="styled-table">  
+<div style="margin-right: 10px;">
+  <thead>
+    <tr>
+      <th>Date Time</th>
+      <th>Task</th>
+      <th>Description</th>
+      <th>Task Feedback</th>
+      <th>Your Feedback</th>
+    </tr>
+  </thead>
+    {% for v in task%}
+    {% if v.hr_status != 'Complete' %}
+      {% if forloop.counter|divisibleby:2 %}
+        <tr>
+          <td>{{v.assigned_time}}</td>
+          <td>{{v.task}}</td>
+          <td>{{v.description}}</td>
+          <td>{{v.hr_feedback}}</td>
+          <form method="POST" action="{% url 'addResponse' %}">
+            <input type="hidden" value="{{v.task_id}}" name="task_id"/>
+            {% csrf_token %}
+            <td><center>
+              <input type="submit" name="submit" class="add" value="ADD"/>
+            </center>
+              </td>
+          </form>
+        </tr>
+      {% else %}
+        <tr class="active-row">
+          <td>{{v.assigned_time}}</td>
+          <td>{{v.task}}</td>
+          <td>{{v.description}}</td>
+          <td>{{v.hr_feedback}}</td>
+          <form method="POST" action="{% url 'addResponse' %}">
+            <input type="hidden" value="{{v.task_id}}" name="task_id"/>
+            
+            {% csrf_token %}
+            <td><center>
+              <input type="submit" name="submit" class="add" value="ADD"/>
+            </center>
+              </td>
+          </form>
+
+        </tr>
+      {% endif %}
+      {% endif %}
+    {% endfor %}
+  </table>
+
+<br/>
+
+</div>
+    </tr>
+  </thead>
+
+
+<div style="margin-right: 20px; margin-left: 10px; margin-bottom: 20px;">
+  <center style="margin-top:20px; color:white; padding: 10px; background-color: #00604d; font-size: large;">Completed Task</center>  
+
+  <table class="styled-tablee">  
+    <div style="margin-right: 30px;">
+  
+    <thead>
+      <tr>
+        <th>Date Time</th>
+        <th>Task</th>
+        <th>Description</th>
+        <th>Time Taken</th>
+        <th></th>
+      </tr>
+    </thead>
+      {% for emp in task%}
+      {% if emp.hr_status == 'Complete' %}
+        {% if forloop.counter|divisibleby:2 %}
+          <tr>
+            <td>{{emp.assigned_time}}</td>
+            <td>{{emp.task}}</td>
+            <td>{{emp.description}}</td>
+            <td>{{emp.time_taken}}</td>
+              {% csrf_token %}
+              <td style="align-items: center;">
+               <img style="width: 50px; height: 50px;" src="../../static/HR/images/complete.svg"></td>
+          </tr>
+        {% else %}
+          <tr class="active-row">
+            <td>{{emp.assigned_time}}</td>
+            <td>{{emp.task}}</td>
+            <td>{{emp.description}}</td>
+            <td>{{emp.time_taken}}</td>
+            
+              
+              {% csrf_token %}
+              <td style="align-items: center;">
+                <img style="width: 50px; height: 50px;" src="../../static/HR/images/complete.svg"></td>
+            
+  
+          </tr>
+        {% endif %}
+        {% endif %}
+      {% endfor %}
+      </div>
+    </table>
+</div>
+</div>
+
+
+
+
+{% endblock %}

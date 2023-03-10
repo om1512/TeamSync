@@ -18,9 +18,9 @@
       <img src="{%static 'Employee/images/dashboardHead.svg'%}" alt="" />
     </div>
     <div class="menu">
-      <img class="profilePic" src="{%static 'Employee/images/profile.jpg'%}" alt="" />
+      <img class="profilePic" src="../../../media/{% block image %} {% endblock %}" alt="" />
       <p class="userType">Employee</p>
-      <p class="userName">James Goblin</p>  
+      <p class="userName">{% block username%} {% endblock %}</p>  
       <div class="menuHolder">
         <a href="{% url 'profile' %}" style="text-decoration: none">
           <div
@@ -48,7 +48,7 @@
               src="{%static 'Employee/images/Salary.svg'%}"
               alt=""
             />
-            <p class="menuText">Project</p>
+            <p class="menuText">Task</p>
           </div>
         </a>
         <a href="{% url 'query' %}" style="text-decoration: none">

@@ -2,4 +2,129 @@
 {% block image %}{{image}}{% endblock %}
 {% block username %}{{firstname}}{% endblock %}
 {% block leavenotes %} background-color: #D5D9DB; {% endblock %}
-{% block body %} leave notes {% endblock %}
+{% block css%}
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.7em;
+  font-family: sans-serif;
+  min-width: 400px;
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size:14px;
+}
+
+.styled-table thead tr {
+  background-color: #2A3E4C;
+  color: #ffffff;
+  text-align: left;
+}
+.container{
+  margin-right:60px;
+}
+.profile{
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border:1px solid #5C7985;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2A3E4C;
+}
+.content{
+  margin-right: 20px;
+} 
+.styled-table tbody tr.active-row {
+  color: #2A3E4C;
+}
+.add{
+  background-color:#2A3E4C;
+  color:white;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  width:auto;
+  border-radius:5px;
+  font-family: sans-serif;
+}
+
+{% endblock %}
+
+
+{% block body %} 
+
+<div class="container">
+
+  <center style="margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Requested Leaves</center>  
+
+  <table class="styled-table" >  
+<div style="margin-right: 10px;">
+  <thead>
+    <tr>
+      <th>Purpose</th>
+      <th>Desc</th>
+      <th>Leave Type</th>
+      <th>Leave_From</th>
+      <th>Days</th>
+      <th></th>
+    </tr>
+  </thead>
+    {% for v in leave_notes %}
+    {% if v.status != 'Approved' %}
+      {% if forloop.counter|divisibleby:2 %}
+        <tr>
+          <td>{{v.purpose}}</td>
+          <td>{{v.desc}}</td>
+          <td>{{v.leave_type}}</td>
+          <td>{{v.leave_from}}</td>
+          <td>{{v.days}}</td>
+          <form method="POST" action="{url 'leaveResponse'}">
+            {% csrf_token %}
+
+          <td>         
+            <input type="hidden" value="{{t.user_name}}" name="username"/>
+            <input type="submit" class="add" value="Response"/></td>
+          </form>
+        </tr>
+      {% else %}
+        <tr class="active-row">
+          <td>{{v.purpose}}</td>
+          <td>{{v.desc}}</td>
+          <td>{{v.leave_type}}</td>
+          <td>{{v.leave_from}}</td>
+          <td>{{v.days}}</td>
+          <form method="POST" action="{url 'leaveResponse'}">
+            {% csrf_token %}
+            <td>         
+              <input type="hidden" value="{{t.user_name}}" name="username"/>
+              <input type="submit" class="add" value="Response"/></td>
+            </form>
+        </tr>
+      {% endif %}
+      {% endif %}
+    {% endfor %}
+  </table>
+
+
+ 
+       
+</div>
+
+
+{% endblock %}

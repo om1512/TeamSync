@@ -1,3 +1,207 @@
 {% extends 'Employee/basic_dashboard.html'%}
-{% block leavenotes %} background-color: #D5D9DB; {% endblock %}
-{% block body %} leave notes {% endblock %}
+{% block image %}{{image}}{% endblock %}
+{% block username %}{{firstname}}{% endblock %}
+{% block leavenote %} background-color: #D5D9DB; {% endblock %}
+{% block css %}
+.container{
+  margin-right:20px;
+}
+
+.styled-table {
+  border-collapse: collapse;
+  margin: 0 px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size:15px;
+}
+
+.styled-table thead tr {
+  background-color: #2A3E4C;
+  color: #ffffff;
+  text-align: left;
+}
+.container{
+  margin-right:60px;
+}
+.profile{
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border:1px solid #2A3E4C;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2A3E4C;
+}
+
+.styled-table tbody tr.active-row {
+  color: #2A3E4C;
+}
+.add{
+  background-color:#2A3E4C;
+  color:white;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  width:70px;
+  border-radius:5px;
+  font-family: sans-serif;
+}
+.view{
+  background-color:#5C7985;
+  color:#fff;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  border-radius:5px;
+  margin-right:-10px;
+  font-family: sans-serif;
+}
+
+
+{% endblock %}
+{% block body %} 
+
+
+<div class="content">
+  <center style="margin-inline: 28px; margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Your Remaining Annual Leaves : {{leaves}}</center>  
+  <br/>
+  {% for message in messages%}
+  
+    <div class="alertContainer" style="margin-inline: 28px;">
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>  
+      </div>
+ 
+  {% endfor %}
+  <div class="container">
+
+    <center style="margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Requested Leaves</center>  
+  
+    <table class="styled-table
+    " >  
+  <div style="margin-right: 10px;">
+    <thead>
+      <tr>
+        <th>Purpose</th>
+        <th>Desc</th>
+        <th>Leave Type</th>
+        <th>Status</th>
+        <th>Response</th>
+        <th>Leave_From</th>
+        <th>Days</th>
+      </tr>
+    </thead>
+      {% for v in my_leaves %}
+      {% if v.status != 'Approved' %}
+        {% if forloop.counter|divisibleby:2 %}
+          <tr>
+            <td>{{v.purpose}}</td>
+            <td>{{v.desc}}</td>
+            <td>{{v.leave_type}}</td>
+            <th>{{v.status}}</th>
+            <th>{{v.response}}</th>
+            <td>{{v.leave_from}}</td>
+            <td>{{v.days}}</td>
+          
+          </tr>
+        {% else %}
+          <tr class="active-row">
+            <td>{{v.purpose}}</td>
+            <td>{{v.desc}}</td>
+            <td>{{v.leave_type}}</td>
+            <th>{{v.status}}</th>
+            <th>{{v.response}}</th>
+            <td>{{v.leave_from}}</td>
+            <td>{{v.days}}</td>
+          
+  
+          </tr>
+        {% endif %}
+        {% endif %}
+      {% endfor %}
+    </table>
+    <br/>
+  </div>
+
+ 
+
+      <div class="card">
+        <div class="card-header" style="background-color: #5C7985; color: #fff;">
+          <div class="text-header">Request Leaves</div>
+        </div>
+        <div class="card-body">
+          <form action="" method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+            
+              
+              <div class="form-group">
+                <div class="input-group" style="display: flex; flex-direction: column;">
+                  <label class="label">Leave From</label>
+                  <input autocomplete="off" name="date"  class="input" type="date"
+                  style="  border: 1px solid #ccc;
+                  ">
+                  <div></div></div>          
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; column-gap: 10px">
+                  <div class="form-group" style="margin-top: -5px;">
+                    <label for="exampleFormControlTextarea1">Number Of Days</label>
+                    <input type="text" class="input" name="days" value="" id="exampleFormControlTextarea1" rows="1"/>
+                  </div>
+                  <div class="form-group" style="margin-top: -5px;">
+                    <label for="exampleFormControlTextarea1">Status</label>
+                    <select class="form-select form-select-sm" name="status" style="width: 100%; height: 45px;">
+                      <option selected></option>
+                      <option>Emergency</option>
+                      <option>Normal</option>
+                      </select>
+                  </div>
+      
+                  </div>
+                
+                <div class="form-group" style="margin-top: -5px;">
+                  <label for="exampleFormControlTextarea1">Purpose</label>
+                  <input type="text" class="input" name="purpose" value="" id="exampleFormControlTextarea1" rows="1"/>
+                </div>
+            <div class="form-group" style="margin-top: -5px;">
+              <label for="exampleFormControlTextarea1">Description</label>
+              <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+
+              
+            
+          
+            <div class="row"  style="display: grid; grid-template-columns: 1gr; column-gap: 20px; margin-inline: 1px; margin-bottom: 10px;">
+              <input type="submit" value="submit"  style="background-color: #2A3E4C;" name="submit" class="btn btn-primary"/>
+            </div>
+          </form>
+          <center>
+          Note : Don't apply until you get previous leave response
+        </center>
+        </div>
+      </div>
+</div>
+{% endblock %}

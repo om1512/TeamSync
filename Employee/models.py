@@ -24,7 +24,7 @@ class Employee(models.Model):
     resident_address = models.CharField(max_length=100)
     hometown = models.CharField(max_length=50)
     salary = models.IntegerField(default=0)
-    remaining_leaves = models.IntegerField(default=0)
+    remaining_leaves = models.IntegerField(default=15)
     def __str__(self):
         return str(self.user_name)
     
@@ -43,4 +43,19 @@ class emp_task(models.Model):
     def __str__(self):
         return str(self.user_name)
     
+
+
+class leave_notes(models.Model):
+    user_name = models.ForeignKey(User, on_delete=models.CASCADE)
+    purpose = models.CharField(max_length=100)
+    desc = models.CharField(max_length=300)
+    leave_type = models.CharField(max_length=20,default='')
+    status = models.CharField(max_length=10)
+    response = models.CharField(max_length=100,default='')
+    leave_from  = models.DateField()
+    days = models.IntegerField(default=0)
+    def __str__(self):
+        return str(self.user_name)
+    
+
     
