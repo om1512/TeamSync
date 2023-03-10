@@ -39,7 +39,7 @@ def leaveResponse(request):
         image = str(hr.profile_picture)
         l = leaves.objects.all()
         if request.POST.get('username') and request.POST.get('response') and request.POST.get('submit'):    
-                ll = leaves.objects.get(user_name=User.objects.get(username=request.POST.get('username')))
+                ll = leaves.objects.get(leave_id=request.POST.get('username'))
                 ll.response=request.POST.get('response')
                 ll.status=request.POST.get('submit')
                 ll.save()

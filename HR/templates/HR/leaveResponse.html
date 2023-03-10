@@ -88,7 +88,7 @@
   </thead>
     {% for v in leave_notes %}
     {% if v.status == '' %}
-    <input type="hidden" value="{{v.user_name}}" name="username"/>
+    <input type="hidden" value="{{v.leave_id}}" name="username"/>
 
       {% if forloop.counter|divisibleby:2 %}
         <tr>
@@ -101,7 +101,7 @@
             {% csrf_token %}
 
           <td>         
-            <input type="hidden" value="{{v.user_name}}" name="username"/>
+            <input type="hidden" value="{{v.leave_id}}" name="username"/>
             <input type="submit" class="add" value="Response"/></td>
           </form>
         </tr>
@@ -115,7 +115,7 @@
           <form method="POST" action="{% url 'leaveResponse' %}">
             {% csrf_token %}
             <td>         
-              <input type="hidden" value="{{v.user_name}}" name="username"/>
+              <input type="hidden" value="{{v.leave_id}}" name="username"/>
               <input type="submit" class="add" value="Response"/></td>
             </form>
         </tr>

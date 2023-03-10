@@ -26,7 +26,7 @@ def request_leaves(request):
                 l.desc = request.POST.get('description')
                 l.leave_type = request.POST.get('status')
                 l.save()
-                emp.remaining_leaves = emp.remaining_leaves-1
+                Employee.objects.filter(user_name=User.objects.get(username=request.user)).update(remaining_leaves=emp.remaining_leaves-1)
                 messages.success(request,'Leave Note Send Successfully')
         return render(request, 'Employee/request_leaves.html',{'firstname':emp.first_name,'image':image,'employee_name':employee_name,'leaves':emp.remaining_leaves,'my_leaves':my_leaves})
     else:
