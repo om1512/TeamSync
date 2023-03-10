@@ -68,7 +68,8 @@
 
 
 {% block body %} 
-
+<form method="POST">
+  {% csrf_token %}
 <div class="container">
 
   <center style="margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Requested Leaves</center>  
@@ -86,7 +87,9 @@
     </tr>
   </thead>
     {% for v in leave_notes %}
-    {% if v.status != 'Approved' %}
+    {% if v.status == '' %}
+    <input type="hidden" value="{{v.user_name}}" name="username"/>
+
       {% if forloop.counter|divisibleby:2 %}
         <tr>
           <td>{{v.purpose}}</td>
@@ -94,8 +97,13 @@
           <td>{{v.leave_type}}</td>
           <td>{{v.leave_from}}</td>
           <td>{{v.days}}</td>
-          <td>                <input type="submit" class="add" value="Response"/></td>
-        </td>
+          <form method="POST" action="{% url 'leaveResponse' %}">
+            {% csrf_token %}
+
+          <td>         
+            <input type="hidden" value="{{v.user_name}}" name="username"/>
+            <input type="submit" class="add" value="Response"/></td>
+          </form>
         </tr>
       {% else %}
         <tr class="active-row">
@@ -104,30 +112,39 @@
           <td>{{v.leave_type}}</td>
           <td>{{v.leave_from}}</td>
           <td>{{v.days}}</td>
-          <td>                <input type="submit" class="add" value="Response"/></td>
-        </td>
+          <form method="POST" action="{% url 'leaveResponse' %}">
+            {% csrf_token %}
+            <td>         
+              <input type="hidden" value="{{v.user_name}}" name="username"/>
+              <input type="submit" class="add" value="Response"/></td>
+            </form>
         </tr>
       {% endif %}
       {% endif %}
-    {% endfor %}
+      {% endfor %}
   </table>
 
 
-  <div class="form-group">
-    <div class="input-group">
-      <label class="label">Response</label>
-      <input autocomplete="off" name="response"  class="input" type="text">
-      <div></div></div>    
-    
-     
-    </div>
+
        
 </div>
+
+
+
+  <div class="form-group" style="margin-inline: 15px;">
+    <div class="input-group">
+      <label class="label">Response</label>
+      <input autocomplete="off" name="response"  class="input" type="text"/>
+      <div></div></div>    
+
+    </div>
 <div style="margin-right: 17px; margin-left: 10px;">
-  <button style="width: 100%; margin-bottom: 10px;" type="button" class="btn btn-outline-success">Approve</button>
+  <button style="width: 100%; margin-bottom: 10px;" name="submit" value="Approve" type="submit" class="btn btn-outline-success">Approve</button>
   <br/>
-  <button style="width: 100%;" type="button" class="btn btn-outline-danger">Reject</button>
+  <button style="width: 100%;" type="submit" name="submit" value="Reject" class="btn btn-outline-danger">Reject</button>
 
 </div>  
+</form>
+
 
 {% endblock %}

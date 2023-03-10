@@ -2,7 +2,7 @@ import datetime
 import time
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from Employee.models import Employee,emp_task,leave_notes
+from Employee.models import Employee,emp_task,leaves
 from HR.models import vacancy,appliers
 from HR.models import HR
 from django.contrib.auth.models import User
@@ -37,9 +37,12 @@ def leaveResponse(request):
     if request.user.is_authenticated:
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
-        l = leave_notes.objects.all()
-        username = request.POST.get('username')
-        print(username)
+        l = leaves.objects.all()
+        if request.POST.get('username') and request.POST.get('response') and request.POST.get('submit'):    
+                ll = leaves.objects.get(user_name=User.objects.get(username=request.POST.get('username')))
+                ll.response=request.POST.get('response')
+                ll.status=request.POST.get('submit')
+                ll.save()
         return render(request, 'HR/leaveResponse.html',{'firstname':hr.first_name,'image':image,'leave_notes':l})
     else:
         return redirect('/')
@@ -74,7 +77,7 @@ def leaveNotes(request):
     if request.user.is_authenticated:
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
-        l = leave_notes.objects.all()
+        l = leaves.objects.all()
         return render(request, 'HR/leavenotes.html',{'firstname':hr.first_name,'image':image,'leave_notes':l})
     else:
         return redirect('/')

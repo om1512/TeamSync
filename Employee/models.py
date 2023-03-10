@@ -45,7 +45,8 @@ class emp_task(models.Model):
     
 
 
-class leave_notes(models.Model):
+class leaves(models.Model):
+    leave_id = models.BigAutoField(primary_key=True)
     user_name = models.ForeignKey(User, on_delete=models.CASCADE)
     purpose = models.CharField(max_length=100)
     desc = models.CharField(max_length=300)

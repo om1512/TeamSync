@@ -86,7 +86,7 @@
     </tr>
   </thead>
     {% for v in leave_notes %}
-    {% if v.status != 'Approved' %}
+    {% if v.status == '' %}
       {% if forloop.counter|divisibleby:2 %}
         <tr>
           <td>{{v.purpose}}</td>
@@ -94,11 +94,11 @@
           <td>{{v.leave_type}}</td>
           <td>{{v.leave_from}}</td>
           <td>{{v.days}}</td>
-          <form method="POST" action="{url 'leaveResponse'}">
+          <form method="POST" action="{% url 'leaveResponse' %}">
             {% csrf_token %}
 
           <td>         
-            <input type="hidden" value="{{t.user_name}}" name="username"/>
+            <input type="hidden" value="{{v.user_name}}" name="username"/>
             <input type="submit" class="add" value="Response"/></td>
           </form>
         </tr>
@@ -109,10 +109,10 @@
           <td>{{v.leave_type}}</td>
           <td>{{v.leave_from}}</td>
           <td>{{v.days}}</td>
-          <form method="POST" action="{url 'leaveResponse'}">
+          <form method="POST" action="{% url 'leaveResponse' %}">
             {% csrf_token %}
             <td>         
-              <input type="hidden" value="{{t.user_name}}" name="username"/>
+              <input type="hidden" value="{{v.user_name}}" name="username"/>
               <input type="submit" class="add" value="Response"/></td>
             </form>
         </tr>

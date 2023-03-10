@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout as auth_logout
-from .models import Employee,emp_task,leave_notes
+from .models import Employee,emp_task,leaves
 from django.contrib.auth.models import User
 from django.contrib import messages
 
@@ -15,10 +15,10 @@ def request_leaves(request):
         image = str(emp.profile_picture)
         employee_name = request.user
         print(emp.remaining_leaves)
-        my_leaves = leave_notes.objects.filter(user_name = User.objects.get(username=request.user))
+        my_leaves = leaves.objects.filter(user_name = User.objects.get(username=request.user))
         if request.method == 'POST':
             if request.POST.get('date') and request.POST.get('days') and request.POST.get('status') and request.POST.get('purpose') and request.POST.get('description'):  
-                l = leave_notes()
+                l = leaves()
                 l.user_name = User.objects.get(username=request.user)
                 l.leave_from = request.POST.get('date')
                 l.days = request.POST.get('days')
