@@ -92,7 +92,6 @@ def add_hr(request):
         return render(request, 'addHR.html')
 
 def vacancy_info(request):
-
     v = vacancy.objects.all()
     return render(request, 'vacancyInfo.html',{'vacancy':v})
 
@@ -137,4 +136,4 @@ def applyForJob(request):
                 a.save()
                 print('inserted')
                 return redirect('/vacancyInfo')
-        return render(request, 'applyForJob.html',{'vacancy':v})    
+        return render(request, 'applyForJob.html',{'vacancy':v})      

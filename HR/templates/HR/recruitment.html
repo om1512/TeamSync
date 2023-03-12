@@ -176,7 +176,7 @@
             <td>{{ap.email}}</td>
             <td>{{ap.phone_no}}</td>
             <input type="hidden" value="{{ap.cv}}" name="cv"/>
-            <input type="hidden" value="{{ap.vacancy_id}}" name="vacancy_id"/>
+            <input type="hidden" value="{{ap.id}}" name="applier_id"/>
 
               {% csrf_token %}
               <input type="hidden" name="cv" value="{{ap.cv}}"/>

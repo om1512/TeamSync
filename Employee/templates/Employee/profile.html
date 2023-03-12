@@ -1,3 +1,155 @@
 {% extends 'Employee/basic_dashboard.html'%}
+{% block image %}{{image}}{% endblock %}
+{% block username %}{{firstname}}{% endblock %}
 {% block profile %} background-color: #D5D9DB; {% endblock %}
-{% block body %}  Profile Page {% endblock %}
+{% block css%}
+.container{
+  display: grid;
+  grid-template-columns:1fr 1fr ;
+  column-gap:15px;
+}
+
+  .styled-table {
+  border-collapse: collapse;
+  margin: 0 px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size:15px;
+}
+
+.styled-table thead tr {
+  background-color: #2A3E4C;
+  color: #ffffff;
+  text-align: left;
+}
+.container{
+  margin-right:60px;
+}
+.profile{
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2A3E4C;
+}
+
+.styled-table tbody tr.active-row {
+  color: #2A3E4C;
+}
+
+{% endblock %}
+
+{% block body %}
+
+{% for e in emp %}
+<center style="margin-inline: 13px;
+margin-bottom: 5px;
+margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Profile</center> 
+<div class="container">
+   
+  <div class="table1">
+    <table class="styled-table">  
+      <tr class="active-row">
+        <th>UserName</th>
+        <td>{{e.user_name}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>EMail</th>
+        <td>{{e.email_id}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Phone</th>
+        <td>{{e.mobile_no}}</td>
+      </tr>
+      
+      <tr class="active-row">
+        <th>FirstName </th>
+        <td>{{e.first_name}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>LastName</th>
+        <td>{{e.last_name}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Gender</th>
+        <td>{{e.gender}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Age </th>
+        <td>{{e.age}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Salary</th>
+        <td>{{e.salary}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Address</th>
+        <td>{{e.resident_address}}</td>
+      </tr>
+      
+    </table>
+  </div>
+  <div class="table2">
+    <table class="styled-table">  
+      <tr class="active-row">
+        <th>Joining Date</th>
+        <td>{{e.joining_date}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Department</th>
+        <td>{{e.department}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Position</th>
+        <td>{{e.position}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Role</th>
+        <td>{{e.role}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Working Desk</th>
+        <td>{{e.working_desk}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Supervisor</th>
+        <td>{{e.supervisor}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Date of Birth</th>
+        <td>{{e.date_of_birth}}</td>
+      </tr>
+      <tr class="active-row">
+        <th>Hometown</th>
+        <td>{{e.hometown}}</td>
+      </tr>
+      <tr class="active-row" style="height: 70px;">
+        <th>Remaining Leaves</th>
+        <td>{{e.remaining_leaves}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

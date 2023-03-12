@@ -3,11 +3,23 @@ from django.contrib.auth import logout as auth_logout
 from .models import Employee,emp_task,leaves
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from datetime import date
 # Create your views here.
 
 def profile(request):
-    return render(request,'Employee/profile.html')
+     if request.user.is_authenticated:
+        emp = Employee.objects.get(user_name=User.objects.get(username=request.user))
+        image = str(emp.profile_picture)
+        employee_name = request.user
+        dob = emp.date_of_birth
+        today = date.today()
+        age= today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+        Employee.objects.filter(user_name=User.objects.get(username=request.user)).update(age=age)
+        profile = Employee.objects.filter(user_name=User.objects.get(username=request.user))
+        user = User.objects.get(username = request.user)
+        return render(request, 'Employee/profile.html',{'firstname':emp.first_name,'image':image,'employee_name':employee_name,'emp':profile})
+     else:
+        return redirect('/')
 
 def request_leaves(request):
     if request.user.is_authenticated:

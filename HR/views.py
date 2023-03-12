@@ -61,11 +61,27 @@ def recruitment(request):
                 return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v,'appliers':a})
             if request.POST.get('cv') and request.POST.get('submit') == 'View':
                 return redirect('/media/'+request.POST.get("cv"))
-            if request.POST.get('vacancy_id') and request.POST.get('submit') == 'Approve':
-                appliers.objects.filter(vacancy_id = vacancy.objects.get(vacancy_id=request.POST.get('vacancy_id'))).update(status = 'Approve')
+            if request.POST.get('applier_id') and request.POST.get('submit') == 'Approve':
+                appliers.objects.filter(id = request.POST.get('applier_id')).update(status = 'Approve')
+                Applier = appliers.objects.get(id = request.POST.get('applier_id'))
+                Vacnacy = vacancy.objects.get(vacancy_id = str(Applier.vacancy_id))
+                send_mail(
+                        'Job Application Latter Status',
+                        'Dear, '+ Applier.name+'\nYou have Applied For '+Vacnacy.main_work+' in Department '+Vacnacy.department+'\nYou are SELECTED for this position. we will soon notify you about further procedure.\nFor Query contact us omdhingani0@gmail.com',
+                        'omdhingani0@gmail.com',
+                        [Applier.email],
+                        fail_silently=False,)   
                 return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v,'appliers':a})
-            if request.POST.get('vacancy_id') and request.POST.get('submit') == 'Reject':
-                appliers.objects.filter(vacancy_id = vacancy.objects.get(vacancy_id=request.POST.get('vacancy_id'))).update(status = 'Reject')
+            if request.POST.get('applier_id') and request.POST.get('submit') == 'Reject':
+                appliers.objects.filter(id = request.POST.get('applier_id')).update(status = 'Reject')
+                Applier = appliers.objects.get(id = request.POST.get('applier_id'))
+                Vacnacy = vacancy.objects.get(vacancy_id = str(Applier.vacancy_id))
+                send_mail(
+                        'Job Application Latter Status',
+                        'Dear, '+ Applier.name+'\nYou have Applied For '+Vacnacy.main_work+' in Department '+Vacnacy.department+'\nYou are NOT SELECTED for this position.\nWish you ALL THE BEST for your upcoming future. KEEP TRYING & KEEP GROWING\nFor Query contact us on omdhingani0@gmail.com',
+                        'Om Dhingani',
+                        [Applier.email],
+                        fail_silently=False,)  
                 return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v,'appliers':a})
             
         return render(request, 'HR/recruitment.html',{'firstname':hr.first_name,'image':image,'vacancy':v,'appliers':a})    
