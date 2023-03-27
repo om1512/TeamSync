@@ -3,13 +3,15 @@ import time
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from Employee.models import Employee,emp_task,leaves
-from HR.models import vacancy,appliers
+from HR.models import vacancy,appliers,salaryHistory
 from HR.models import HR
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import logout as auth_logout
 from django.utils import timezone
 from django.core.mail import send_mail
+from django.db import connection
+from django.forms import formset_factory
 # Create your models here.
 # Create your views here.
 
@@ -29,7 +31,17 @@ def payroll(request):
     if request.user.is_authenticated:
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
-        return render(request, 'HR/payroll.html',{'firstname':hr.first_name,'image':image})
+        salary_history = salaryHistory.objects.all()
+        sal = Employee.objects.all()
+        date = datetime.date.today()
+        s = salaryHistory.objects.filter(year = date.year,month = date.month)  
+        if len(s) == 0:
+            stat = "false"
+        else:
+            stat = "true"
+
+
+        return render(request, 'HR/payroll.html',{'firstname':hr.first_name,'image':image,'salaryHistory':salary_history,'sal':sal,'month':date.month,'year':date.year,'stat':stat})
     else:
         return redirect('/')
 
@@ -185,7 +197,9 @@ def addPerformance(request):
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
         user_name = request.POST.get('username')
-        employee_task = emp_task.objects.filter(user_name = User.objects.get(username=user_name))       
+        employee_task = emp_task.objects.filter(user_name = User.objects.get(username=user_name))
+
+     
         return render(request, 'HR/addPerformance.html',{'firstname':hr.first_name,'image':image,'employee_task':employee_task})
     else:
         return redirect('/')    

@@ -49,6 +49,12 @@ class appliers(models.Model):
     def __str__(self):
         return str(self.vacancy_id)
     
-
+class salaryHistory(models.Model):
+    salary_id = models.BigAutoField(primary_key=True)
+    year = models.IntegerField()
+    month = models.IntegerField()
+    amount = models.IntegerField()
+    def __str__(self):
+        return str(self.salary_id)
     
 

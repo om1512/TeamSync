@@ -59,4 +59,9 @@ class leaves(models.Model):
         return str(self.user_name)
     
 
-    
+class attendance(models.Model):
+    user_name = models.ForeignKey(User, on_delete=models.CASCADE)
+    attendance_date = models.DateField()
+    status = models.CharField(max_length=20)
+    def __str__(self):
+            return str(self.user_name)

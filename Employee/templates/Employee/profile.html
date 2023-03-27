@@ -62,11 +62,39 @@
 
 {% block body %}
 
+
+{% for message in messages%}
+  
+    <div class="alertContainer" style="margin-inline: 15px;">
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            <strong>Message : </strong>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>  
+      </div>
+ 
+  {% endfor %}
+
 {% for e in emp %}
+
+<form method="POST" action="">
+  {% csrf_token %}
+  <div class="attendece-container" style="display: grid; grid-template-columns: 1fr 3fr; margin-inline: 15px;">
+    <div style=" display: block; margin-top: 7px;"><b>Date : {{ date }} {{day}}</b></div>
+  
+  <div>
+    <input type="submit" name="attendance" style="text-align: center; width: 100%;" class="btn btn-outline-success" value="Mark Your Attendance"> 
+  
+  </div>
+    
+  </div>
+
+</form>
+
+
 <center style="margin-inline: 13px;
 margin-bottom: 5px;
 margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Profile</center> 
-<div class="container">
+<div class="container" style="margin-bottom: 20px;">
    
   <div class="table1">
     <table class="styled-table">  
@@ -151,5 +179,7 @@ margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171
     </table>
   </div>
 </div>
+
+
 {% endfor %}
 {% endblock %}

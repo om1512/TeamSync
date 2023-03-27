@@ -3,4 +3,167 @@
 {% block image %}{{image}}{% endblock %}
 {% block username %}{{firstname}}{% endblock %}
 {% block payroll %} background-color: #D5D9DB; {% endblock %}
-{% block body %} Payroll {% endblock %}
+
+{% block css%}
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.7em;
+  font-family: sans-serif;
+  min-width: 400px;
+  width:100%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  font-size:14px;
+}
+
+input{
+  width:70px;
+  text-align:center;
+  padding:3px;
+  
+}
+.styled-table thead tr {
+  background-color: #2A3E4C;
+  color: #ffffff;
+  text-align: left;
+}
+.container{
+  margin-right:60px;
+}
+.profile{
+  width: 70px;
+  height: 70px;
+  border-radius: 100px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border:1px solid #5C7985;
+  text-align:center;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #2A3E4C;
+}
+.content{
+  margin-right: 20px;
+} 
+.styled-table tbody tr.active-row {
+  color: #2A3E4C;
+}
+.add{
+  background-color:#2A3E4C;
+  color:white;
+  border:none;
+  padding:8px 20px;
+  font-size:14px;
+  width:auto;
+  border-radius:5px;
+  font-family: sans-serif;
+}
+
+{% endblock %}
+
+
+
+{% block body %} 
+
+<div class="container">
+
+  <center style="margin-top:20px; color:white; padding: 10px; background-color: rgb(121, 147, 171); font-size: large;">Salary History</center>  
+
+
+
+  <table class="styled-table" align="center" >  
+<div style="margin-right: 10px; margin-top: -23px;">
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Amount Paid</th>
+    </tr>
+  </thead>
+    {% for v in salaryHistory %}
+      {% if forloop.counter|divisibleby:2 %}
+        <tr>
+          <td>{{v.year}}</td>
+          <td>{{v.month}}</td>
+          <td>{{v.amount}}</td>
+          
+        </tr>
+      {% else %}
+        <tr class="active-row">
+          <td>{{v.year}}</td>
+          <td>{{v.month}}</td>
+          <td>{{v.amount}}</td>
+          
+        </tr>
+      {% endif %}
+   
+    {% endfor %}
+  </table>
+
+
+  <div style="display: flex; flex-direction: row;">
+    <div style="margin-right: 10px;">Current Year : {{year}}</div>
+    <div>Month : {{month}}</div>
+  </div>
+ 
+  {% if stat == "false"%}
+  <table class="styled-table" align="center" >  
+    <div style="margin-right: 10px; margin-top: -23px;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Department</th>
+          <th>Position</th>
+          <th>Salary</th>
+        </tr>
+      </thead>
+        {% for v in sal %}
+          {% if forloop.counter|divisibleby:2 %}
+            <tr>
+              <td>{{v.user_name}}</td>
+              <td>{{v.department}}</td>
+              <td>{{v.position}}</td>
+              <form method="POST" action="">
+                
+              <td><input type="text" value="{{v.salary}}"/></td>
+
+            </form>
+            </tr>
+          {% else %}
+            <tr class="active-row">
+              <td>{{v.user_name}}</td>
+              <td>{{v.department}}</td>
+              <td>{{v.position}}</td>
+              <form method="POST" action="">
+                <td><input type="text" value="{{v.salary}}"/></td>
+              </form>
+            </tr>
+          {% endif %}
+       
+        {% endfor %}
+      </table>
+      <input type="submit" class="btn" value="make payment" style="color: #fff;background-color: #5C7985; width: 100%; margin-bottom: 20px;"/>  
+  {% else %}
+  <div class="alert alert-success" role="alert">
+    Salary Paid
+  </div>    
+  {% endif %}
+    
+ </div>
+ 
+
+{% endblock %}

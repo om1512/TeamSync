@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout as auth_logout
-from .models import Employee,emp_task,leaves
+from .models import Employee,emp_task,leaves,attendance
 from django.contrib.auth.models import User
 from django.contrib import messages
 from datetime import date
@@ -8,6 +8,21 @@ from datetime import date
 
 def profile(request):
      if request.user.is_authenticated:
+        if request.method == 'POST':
+            if request.POST.get('attendance'):
+                try:
+                    if attendance.objects.get(user_name = User.objects.get(username=request.user),attendance_date = date.today()):
+                        messages.add_message(request, messages.INFO, 'You have already attended today!')
+                        print("You Already Attended Today")
+                except Exception as e:
+                    att = attendance()
+                    att.user_name = request.user
+                    att.attendance_date = date.today()
+                    att.status = "Present"
+                    att.save()
+                    messages.add_message(request, messages.INFO, 'Attendance marked')
+
+                            
         emp = Employee.objects.get(user_name=User.objects.get(username=request.user))
         image = str(emp.profile_picture)
         employee_name = request.user
@@ -17,7 +32,10 @@ def profile(request):
         Employee.objects.filter(user_name=User.objects.get(username=request.user)).update(age=age)
         profile = Employee.objects.filter(user_name=User.objects.get(username=request.user))
         user = User.objects.get(username = request.user)
-        return render(request, 'Employee/profile.html',{'firstname':emp.first_name,'image':image,'employee_name':employee_name,'emp':profile})
+        today = date.today()
+        d1 = today.strftime("%d/%m/%Y") 
+        day = today.strftime('%A')
+        return render(request, 'Employee/profile.html',{'firstname':emp.first_name,'image':image,'employee_name':employee_name,'emp':profile,'date':d1,'day':day})
      else:
         return redirect('/')
 
