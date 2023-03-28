@@ -13,6 +13,7 @@ urlpatterns = [
     path('evaluate/',views.evaluate,name='evaluate'),
     path('viewCV/',views.viewCV,name="viewCV"),
     path('leaveResponse/',views.leaveResponse,name="leaveResponse"),
-    path('addTask/',views.addTask,name='addTask')
+    path('addTask/',views.addTask,name='addTask'),
+    path('success/',views.success,name='success')
 ]
 

@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-pf438ilm2i++gg^xy3xx01)q-*-7qv3%pn6_ww7shvk6&3d_3-
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+RAZOR_KEY_ID = 'rzp_test_ULKXFl3prtGM7z'
+RAZOR_KEY_SECRET = 'IQyDNCHgqTTcZj1SGroTb0Cl'
 
 # Application definition
 

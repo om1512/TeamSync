@@ -2,7 +2,7 @@ import datetime
 import time
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from Employee.models import Employee,emp_task,leaves
+from Employee.models import Employee,emp_task,leaves,employee_salary_history
 from HR.models import vacancy,appliers,salaryHistory
 from HR.models import HR
 from django.contrib.auth.models import User
@@ -12,6 +12,8 @@ from django.utils import timezone
 from django.core.mail import send_mail
 from django.db import connection
 from django.forms import formset_factory
+from django.views.decorators.csrf import csrf_exempt
+import razorpay
 # Create your models here.
 # Create your views here.
 
@@ -26,22 +28,43 @@ def performance(request):
     else:
         return redirect('/')
 
+@csrf_exempt
+def success(request):
+    if request.method == 'POST':
+        if request.POST.get('name') and request.POST.get('salary'):
+            s = employee_salary_history()
+            s.user_name = User.objects.get(username = request.POST.get('name')) 
+            da = datetime.date.today()
+            s.year = da.year
+            s.month = da.month
+            s.salary = request.POST.get('salary')
+            s.save()
+    return render(request, "HR/payroll.html")
 
 def payroll(request):
     if request.user.is_authenticated:
+        
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
         salary_history = salaryHistory.objects.all()
         sal = Employee.objects.all()
         date = datetime.date.today()
+        statusUpdate(date.month,date.year)
         s = salaryHistory.objects.filter(year = date.year,month = date.month)  
         if len(s) == 0:
             stat = "false"
         else:
             stat = "true"
+        if request.method == "POST":
+            name = request.POST.get('name')
+            amount = 10000
 
+            client = razorpay.Client(
+                auth=("rzp_test_ULKXFl3prtGM7z", "IQyDNCHgqTTcZj1SGroTb0Cl"))
 
-        return render(request, 'HR/payroll.html',{'firstname':hr.first_name,'image':image,'salaryHistory':salary_history,'sal':sal,'month':date.month,'year':date.year,'stat':stat})
+            payment = client.order.create({'amount': 100, 'currency': 'INR',
+                                        'payment_capture': '1'})
+        return render(request, 'HR/payroll.html',{'firstname':hr.first_name,'image':image,'salaryHistory':salary_history,'sal':sal,'month':date.month,'year':date.year,'stat':stat,'amount':100})
     else:
         return redirect('/')
 
@@ -264,4 +287,24 @@ def logout(request):
 
 
 
-        
+def statusUpdate(m,y):
+    employee = Employee.objects.all()
+    for emp in employee:
+        try:
+            salary_history = employee_salary_history.objects.filter(user_name = User.objects.get(username = emp.user_name) ,month = 3,year = 2023)
+            print(salary_history)
+            if salary_history.exists():
+                e = Employee.objects.get(user_name = User.objects.get(username = emp.user_name))
+                e.salary_status = "Paid"
+                e.save()
+            else:
+                e = Employee.objects.get(user_name = User.objects.get(username = emp.user_name))
+                e.salary_status = "Unpaid"
+                e.save()
+        except Exception as e:
+            print("NOT EXIST")
+            e = Employee.objects.get(user_name = User.objects.get(username = emp.user_name))
+            e.salary_status = "Unpaid"
+            e.save()
+
+

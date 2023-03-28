@@ -25,6 +25,7 @@ class Employee(models.Model):
     hometown = models.CharField(max_length=50)
     salary = models.IntegerField(default=0)
     remaining_leaves = models.IntegerField(default=15)
+    salary_status = models.CharField(max_length=20,default="Unpaid")
     def __str__(self):
         return str(self.user_name)
     
@@ -64,4 +65,13 @@ class attendance(models.Model):
     attendance_date = models.DateField()
     status = models.CharField(max_length=20)
     def __str__(self):
+            return str(self.user_name)
+
+
+class employee_salary_history(models.Model):
+     user_name = models.ForeignKey(User, on_delete=models.CASCADE)
+     year = models.IntegerField()
+     month = models.IntegerField()
+     salary = models.IntegerField(default=0)
+     def __str__(self):
             return str(self.user_name)
