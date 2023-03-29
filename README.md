@@ -24,6 +24,40 @@
 ## Screenshots
 <img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-06%20144317.png"/>
 
-<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-15%20183053.png"/>
 
-<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-15%20183259.png"/>
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-15%20183221.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20204502.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20204439.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20204257.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20204243.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20204158.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20204133.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20204059.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20204024.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20204010.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20203932.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20203912.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20203820.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20203755.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20203723.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20203655.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20203619.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20203554.png"/>
+
