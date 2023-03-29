@@ -22,4 +22,8 @@
 - See requested leavenote status 
 
 ## Screenshots
-<img src=""/>
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-06%20144317.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-15%20183053.png"/>
+
+<img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-15%20183259.png"/>
