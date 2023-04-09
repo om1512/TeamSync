@@ -43,11 +43,14 @@ def success(request):
 
 def payroll(request):
     if request.user.is_authenticated:
-        
+        sh = salaryHistory()
         hr = HR.objects.get(user_name=User.objects.get(username=request.user))
         image = str(hr.profile_picture)
         salary_history = salaryHistory.objects.all()
         sal = Employee.objects.all()
+        totalSum = 0
+        for e in sal:
+            totalSum += e.salary
         date = datetime.date.today()
         statusUpdate(date.month,date.year)
         s = salaryHistory.objects.filter(year = date.year,month = date.month)  
@@ -55,6 +58,11 @@ def payroll(request):
             stat = "false"
         else:
             stat = "true"
+            sh.year = date.year
+            sh.month = date.month
+            sh.amount = totalSum
+            sh.save()
+
         if request.method == "POST":
             name = request.POST.get('name')
             amount = 10000
