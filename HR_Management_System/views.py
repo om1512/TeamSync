@@ -74,7 +74,7 @@ def add_hr(request):
                         send_mail(
                         "Welcome to Meta",
                         'Dear, '+ request.POST.get('firstname') + "\nWe are excited to welcome you to our team."+ request.POST.get('firstname') +" will meet you in the company. Please remember this username and password. \nUserName : "+request.POST.get('username')+"\nPassword : "+request.POST.get('password') + "\n\nYou Can Use This UserName and Password To Login into Company's System",
-                        '22ceuod004@ddu.ac.in',
+                        'realomdhingani@gmail.com',
                         [request.POST.get('email')],
                         fail_silently=False,)   
                     except Exception as e:

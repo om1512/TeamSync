@@ -177,7 +177,7 @@ def addEmployee(request):
                             send_mail(
                         'System Login Information',
                         'Dear, '+ request.POST.get('firstname') + "\nYour UserName : "+request.POST.get('username')+"\nPassword : "+request.POST.get('password') + "\nYou Can Use This UserName and Password To Login into the System",
-                        '22ceuod004@ddu.ac.in',
+                        'realomdhingani@gmail.com',
                         [request.POST.get('email')],
                         fail_silently=False,)   
                         except Exception as e:
