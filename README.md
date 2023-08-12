@@ -1,6 +1,6 @@
-# HR_Management_System
+# TeamSync
 
-<b>Human Resource Management System</b> Made using Django(Python) and Postgresql Database also integrate an SMTP and RazorPay Payment Gateway. Main Objective of the project is to develop a Human Resource Management system for the Intranet Automation of HR Software. The HR System provides the information regarding the employees. The System has been to facilitate good Interaction/Communication facilities between the Employees and HR Administration.
+<b>TeamSync</b> Made using Django(Python) and Postgresql Database also integrate an SMTP and RazorPay Payment Gateway. Main Objective of the project is to develop a Human Resource Management system for the Intranet Automation of HR Software. The HR System provides the information regarding the employees. The System has been to facilitate good Interaction/Communication facilities between the Employees and HR Administration.
 
 
 ## Features
