@@ -10,7 +10,7 @@
 - Assign Task to the Employee
 - Evaluate performance of employee
 - Payroll Management of company
-- Responde to emplpyee's Leavenotes
+- respond to employee's leave note
 - Open Recruitment on specific job post
 - See all applier's CV, Name, Contact Information
 
