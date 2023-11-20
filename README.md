@@ -20,7 +20,7 @@
 - Can mark attendance of the day
 - Make request for leave with description to HR
 - See requested leavenote status 
-
+#### Screens Designs Are 100% Original except last screen 
 ## Screenshots
 <img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-06%20144317.png"/>
 
