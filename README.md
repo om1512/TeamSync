@@ -61,7 +61,7 @@
 
 <img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-28%20203554.png"/>
 
-## Vacancy Information And Recruitment
+## Vacancy Information & Recruitment
 <img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-29%20202532.png"/>
 <img src="https://github.com/om1512/HR_Management_System/blob/main/screenshots/Screenshot%202023-03-29%20202654.png"/>
 
